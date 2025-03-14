@@ -5,11 +5,11 @@ using static UnityEngine.GraphicsBuffer;
 
 public class LookAtCamera : MonoBehaviour
 {
-    public Transform Camera;
 
+    public Transform Camera; // Camera transform to look at
 
     void Update()
     {
-        transform.rotation = Quaternion.LookRotation(transform.position - Camera.position);
+        transform.rotation = Quaternion.LookRotation(transform.position - Camera.position); // Rotates towards cameras position
     }
 }
