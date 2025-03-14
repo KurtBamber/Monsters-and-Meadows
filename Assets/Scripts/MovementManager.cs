@@ -6,7 +6,7 @@ using UnityEngine;
 public class MovementManager : MonoBehaviour
 {
     public GameObject indicatorPrefab;
-    private List<Movement> selectedMonster = new List<Movement>();//list which checks which monsters you have selected
+    public List<AIController> selectedMonster = new List<AIController>();//list which checks which monsters you have selected
     public int button;//allows us to change whether the left or right mouse button is used for movement
     private Vector3 startPos;//the position of the mouse when beginning to drag
     private float maxDrag = 10f;//the max distance before you start selecting
@@ -62,7 +62,7 @@ public class MovementManager : MonoBehaviour
             Vector3 screenPos = Camera.main.WorldToScreenPoint(monster.transform.position);//converts the monsters world pos to screen space
             if (selectionRect.Contains(screenPos))//checks if the monsters are within the selection area
             {
-                selectedMonster.Add(monster.GetComponent<Movement>());//adds the monster to the list
+                selectedMonster.Add(monster.GetComponent<AIController>());//adds the monster to the list
             }
         }
     }
@@ -90,17 +90,19 @@ public class MovementManager : MonoBehaviour
             if (hit.collider.CompareTag("Monster"))//checks if the player clicked on a monster
             {
                 selectedMonster.Clear();
-                selectedMonster.Add(hit.collider.GetComponent<Movement>());//if so changes the selected monster to that monster
+                selectedMonster.Add(hit.collider.GetComponent<AIController>());//if so changes the selected monster to that monster
             }
             else if (selectedMonster.Count > 0)//checks that there is a monster selected
             {
-                foreach (Movement monster in selectedMonster)//moves each monster
+                foreach (AIController monster in selectedMonster)//moves each monster
                 {
-                    monster.MoveTo(hit.point);
+                    monster.Follow(hit.point);
                 }
 
                 GameObject indicator = Instantiate(indicatorPrefab, hit.point, indicatorPrefab.transform.rotation);//spawns an indicator where clicked
-                Destroy(indicator, 0.3f);//destroys the indicator after 0.3 seconds
+
+                    Destroy(indicator, 0.5f);//destroys the indicator after 0.3 seconds
+              
             }
         }
     }

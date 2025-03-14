@@ -364,6 +364,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   indicatorPrefab: {fileID: 4272143712151768780, guid: f548694fa25d47f4e8b824d668ce870b, type: 3}
+  selectedMonster: []
   button: 0
   selectionBox: {fileID: 1608063942}
   canvas: {fileID: 838670890}
