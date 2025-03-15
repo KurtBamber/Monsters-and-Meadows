@@ -6,9 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/GB_Scenes/Start Scene.unity
+    path: Assets/Dev_Scenes/Start Scene.unity
     guid: 05ac87fa1b026064ba29057490648eb2
   - enabled: 1
-    path: Assets/GB_Scenes/graybox.unity
+    path: Assets/Dev_Scenes/Development.unity
     guid: c092ecf775f79cf4d93aaa498240a566
   m_configObjects: {}
