@@ -9,6 +9,11 @@ public class LevelLoader : MonoBehaviour
 
     public float transitionTime = 1;
 
+    public void Start()
+    {
+        this.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+    }
+
     public void LoadNextLevel()
     {
         StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex + 1));
