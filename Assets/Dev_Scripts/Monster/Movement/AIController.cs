@@ -44,6 +44,18 @@ public class AIController : MonoBehaviour
 
     private void Update()
     {
+<<<<<<< Updated upstream:Assets/Dev_Scripts/Monster/Movement/AIController.cs
+=======
+        if (agent.velocity.magnitude <= 0.15f && isFollowing)
+        {
+            MM.selectedMonster.Clear();
+            isFollowing = false;
+            currentTime = 0.1f;
+            Debug.Log("monster stopped");
+
+        }
+
+>>>>>>> Stashed changes:Assets/GB_Scripts/GB/AIController.cs
         if (!isFollowing)
         {
             currentTime -= Time.deltaTime; // State timer starts reducing
