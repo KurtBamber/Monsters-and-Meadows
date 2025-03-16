@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class AIController : MonoBehaviour
 {
@@ -26,7 +27,7 @@ public class AIController : MonoBehaviour
 
     [Header("UI")]
     public TextMeshProUGUI stateText; // Text showing which state is active
-    public TextMeshProUGUI stateTimer; // Timer showing how long state is active
+    public Image radialTimer; // Radial image to show timer
 
 
     
@@ -47,7 +48,7 @@ public class AIController : MonoBehaviour
         {
             currentTime -= Time.deltaTime; // State timer starts reducing
 
-            stateTimer.text = currentTime.ToString("F2"); // Text is set to timer with only 2 decimal places
+            radialTimer.fillAmount = currentTime / intervalBetweenStates;
 
             if (currentTime <= 0) // When current time reaches zero it randomises state
             {
