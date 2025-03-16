@@ -26,7 +26,7 @@ public class SettingsManager : MonoBehaviour
 
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E) && !isSettingsOpen)
+        if (Input.GetKeyDown(KeyCode.Escape) && !isSettingsOpen)
         {
             OpenPanel();
         }

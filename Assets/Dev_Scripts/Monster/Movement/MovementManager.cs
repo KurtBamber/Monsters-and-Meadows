@@ -12,6 +12,7 @@ public class MovementManager : MonoBehaviour
     private float maxDrag = 10f;//the max distance before you start selecting
     public RectTransform selectionBox;
     public Canvas canvas;
+    public bool isMonsterClicked;
 
     // Update is called once per frame
     void Update()
@@ -40,6 +41,20 @@ public class MovementManager : MonoBehaviour
                 MoveMonsters();
             }
             selectionBox.gameObject.SetActive(false);
+        }
+
+        if(selectedMonster.Count > 0)
+        {
+            isMonsterClicked = true;
+        }
+        else
+        {
+            isMonsterClicked = false;
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            selectedMonster.Clear();
         }
     }
 
@@ -92,7 +107,7 @@ public class MovementManager : MonoBehaviour
                 selectedMonster.Clear();
                 selectedMonster.Add(hit.collider.GetComponent<AIController>());//if so changes the selected monster to that monster
             }
-            else if (selectedMonster.Count > 0)//checks that there is a monster selected
+            if (selectedMonster.Count > 0)//checks that there is a monster selected
             {
                 foreach (AIController monster in selectedMonster)//moves each monster
                 {
@@ -101,8 +116,8 @@ public class MovementManager : MonoBehaviour
 
                 GameObject indicator = Instantiate(indicatorPrefab, hit.point, indicatorPrefab.transform.rotation);//spawns an indicator where clicked
 
-                    Destroy(indicator, 0.5f);//destroys the indicator after 0.3 seconds
-              
+                Destroy(indicator, 0.5f);//destroys the indicator after 0.3 seconds
+
             }
         }
     }

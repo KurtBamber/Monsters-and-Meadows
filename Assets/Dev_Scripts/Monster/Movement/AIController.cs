@@ -13,6 +13,7 @@ public class AIController : MonoBehaviour
 
     [Header("States")]
     public int whichState; // Which state is the monster in currently
+    public string currentState; // State as string for other scripts
     public float intervalBetweenStates = 60; // Set time between picking states
     public float currentTime = 60; // Time which gets reduced as state is played
 
@@ -43,7 +44,6 @@ public class AIController : MonoBehaviour
 
     private void Update()
     {
-
         if (!isFollowing)
         {
             currentTime -= Time.deltaTime; // State timer starts reducing
@@ -69,17 +69,25 @@ public class AIController : MonoBehaviour
     {
         isFollowing = true;
 
+        currentState = "Following";
+
         stateText.text = "Following";
         stateText.color = Color.green;
 
         whichState = 3;
 
         agent.SetDestination(destination);
-        
+
+        if (!MM.selectedMonster.Contains(this))
+        {
+            MonsterWander();
+        }
+
     }
 
     public void MonsterWander() // Changing text and colour, starting monster wandering and resetting timer
     {
+            currentState = "Wandering";
             stateText.text = "Wandering";
             stateText.color = Color.blue;
 
@@ -89,6 +97,7 @@ public class AIController : MonoBehaviour
 
     public void MonsterIdle() // Changing text and colour, stopping monster movement and resetting timer deviding it by 3 so idle is quicker
     {
+        currentState = "Idle";
         stateText.text = "Idle";
         stateText.color = Color.red;
 
