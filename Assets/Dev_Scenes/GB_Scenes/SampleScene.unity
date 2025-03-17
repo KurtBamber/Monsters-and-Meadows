@@ -19583,13 +19583,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 402092049}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 146f984a62acd5343a1b0ce21079163d, type: 3}
+  m_Script: {fileID: 11500000, guid: e5e45e8854b7b8a4b918a7e4e439b602, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentState: 1
+  canMine: 1
+  canChop: 0
+  currentState: 0
   intervalBetweenStates: 30
+  currentTime: 0
   stateText: {fileID: 628244226}
-  stateTimer: {fileID: 422268442}
+  radialTimer: {fileID: 0}
 --- !u!114 &402092056
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27605,6 +27608,7 @@ MonoBehaviour:
   button: 0
   selectionBox: {fileID: 1608063942}
   canvas: {fileID: 838670890}
+  isMonsterClicked: 0
 --- !u!4 &702587941
 Transform:
   m_ObjectHideFlags: 0
@@ -32158,13 +32162,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 878529534}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 146f984a62acd5343a1b0ce21079163d, type: 3}
+  m_Script: {fileID: 11500000, guid: e5e45e8854b7b8a4b918a7e4e439b602, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canMine: 0
+  canChop: 1
   currentState: 0
   intervalBetweenStates: 30
+  currentTime: 0
   stateText: {fileID: 348922136}
-  stateTimer: {fileID: 915312551}
+  radialTimer: {fileID: 0}
 --- !u!195 &878529536
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -35005,7 +35012,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 5f0c2219784777b4e9b12e7e81ed162d, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 6a86cccc5392c0742be89c209f4445a8, type: 2}
   m_BuildHeightMesh: 0
 --- !u!154 &947183137
 TerrainCollider:
@@ -40119,13 +40126,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1067782029}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 146f984a62acd5343a1b0ce21079163d, type: 3}
+  m_Script: {fileID: 11500000, guid: e5e45e8854b7b8a4b918a7e4e439b602, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canMine: 1
+  canChop: 0
   currentState: 0
   intervalBetweenStates: 30
+  currentTime: 0
   stateText: {fileID: 926121790}
-  stateTimer: {fileID: 1129615015}
+  radialTimer: {fileID: 0}
 --- !u!195 &1067782032
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -42909,7 +42919,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 7d27606061adf58458701db7270dfd63, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 875ebfc67cfd8e149b8340a7bc120cb9, type: 2}
   m_BuildHeightMesh: 0
 --- !u!154 &1138116803
 TerrainCollider:
@@ -49893,7 +49903,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 8c6f2015c260c334ca66bbb0191886af, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: caf631072fe9a724cb08bc971db3b38b, type: 2}
   m_BuildHeightMesh: 0
 --- !u!154 &1389123429
 TerrainCollider:
@@ -51482,7 +51492,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: cb5d053c2b31b5b429978c2b2faf1eef, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: f01ed0176e351f048a7568794f0a488a, type: 2}
   m_BuildHeightMesh: 0
 --- !u!154 &1449690372
 TerrainCollider:

@@ -8,6 +8,7 @@ public class InspectorManager : MonoBehaviour
 {
     public GameObject inspectorUI, selectedMonster;
     public bool isInspectorOpen;
+    public MonsterAI MAI;
     public MovementManager MM;
 
     public TextMeshProUGUI monsterName, monsterTrait, monsterActivity;
@@ -43,9 +44,19 @@ public class InspectorManager : MonoBehaviour
     public void UpdateMonsterActivity()
     {
         selectedMonster = MM.selectedMonster[0].gameObject;
-        monsterActivity.text = MM.selectedMonster[0].currentState;
 
-        monsterTime = MM.selectedMonster[0].currentTime;
+        if (MM.selectedMonster[0].GetComponent<MonsterAI>().canChop)
+        {
+            monsterActivity.text = "Wood";
+        }
+
+        if (MM.selectedMonster[0].GetComponent<MonsterAI>().canMine)
+        {
+            monsterActivity.text = "Stone";
+        }
+
+
+        monsterTime = MM.selectedMonster[0].GetComponent<MonsterAI>().currentTime;
         radialTimer.fillAmount = monsterTime / MM.selectedMonster[0].intervalBetweenStates;
 
         monsterName.text = selectedMonster.name;

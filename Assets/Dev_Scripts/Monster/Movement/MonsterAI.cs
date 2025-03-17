@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public enum monsterState { idle, wandering, following, mining, chopping }
 
@@ -23,12 +24,12 @@ public class MonsterAI : MonoBehaviour
     public monsterState currentState;
     public float intervalBetweenStates = 30;//time before changing states
     private int whichState = 0;
-    private float currentTime;
+    public float currentTime;
     private bool isFollowingCommand = false;
 
     [Header("UI")]
     public TextMeshProUGUI stateText;
-    public TextMeshProUGUI stateTimer;
+    public Image radialTimer;
 
     private void Start()
     {
@@ -49,7 +50,7 @@ public class MonsterAI : MonoBehaviour
         }
 
         currentTime -= Time.deltaTime;//state timer starts counting down
-        stateTimer.text = currentTime.ToString("F2");//timer is set to show only two decimal points
+        radialTimer.fillAmount = currentTime / intervalBetweenStates;//timer is set to show only two decimal points
 
         if (currentTime <= 0)//when the timer reaches 0 choose a new state
         {
