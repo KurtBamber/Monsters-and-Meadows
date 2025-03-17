@@ -3887,7 +3887,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9373d5f3ae333f0428401c80dc92b62c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Camera: {fileID: 0}
+  Camera: {fileID: 1641119416}
 --- !u!114 &86890255
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6167,7 +6167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9373d5f3ae333f0428401c80dc92b62c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Camera: {fileID: 0}
+  Camera: {fileID: 1641119416}
 --- !u!114 &146070436
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19567,7 +19567,7 @@ Transform:
   m_GameObject: {fileID: 402092049}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.3250475, y: 0, z: 8.432079}
+  m_LocalPosition: {x: 3.3250475, y: 0, z: 15.75}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -19586,8 +19586,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 146f984a62acd5343a1b0ce21079163d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentState: 0
-  intervalBetweenStates: 60
+  currentState: 1
+  intervalBetweenStates: 30
   stateText: {fileID: 628244226}
   stateTimer: {fileID: 422268442}
 --- !u!114 &402092056
@@ -19602,8 +19602,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0cacdd8047689c4f99bb95833ab380c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wanderRadius: 5
-  moveInterval: 10
+  wanderRadius: 50
+  moveInterval: 4
 --- !u!1 &402279097
 GameObject:
   m_ObjectHideFlags: 0
@@ -20996,7 +20996,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9373d5f3ae333f0428401c80dc92b62c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Camera: {fileID: 0}
+  Camera: {fileID: 1641119416}
 --- !u!114 &443078990
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32162,7 +32162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
-  intervalBetweenStates: 60
+  intervalBetweenStates: 30
   stateText: {fileID: 348922136}
   stateTimer: {fileID: 915312551}
 --- !u!195 &878529536
@@ -32269,7 +32269,7 @@ Transform:
   m_GameObject: {fileID: 878529534}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.855047, y: 0, z: 8.432079}
+  m_LocalPosition: {x: 10.36, y: 0, z: 1.46}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -32288,8 +32288,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0cacdd8047689c4f99bb95833ab380c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wanderRadius: 5
-  moveInterval: 10
+  wanderRadius: 50
+  moveInterval: 4
 --- !u!43 &881019527
 Mesh:
   m_ObjectHideFlags: 0
@@ -40103,7 +40103,7 @@ Transform:
   m_GameObject: {fileID: 1067782029}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.69, y: 0, z: 8.432079}
+  m_LocalPosition: {x: -15.16, y: 0, z: 8.432079}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -40123,7 +40123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
-  intervalBetweenStates: 60
+  intervalBetweenStates: 30
   stateText: {fileID: 926121790}
   stateTimer: {fileID: 1129615015}
 --- !u!195 &1067782032
@@ -40233,8 +40233,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0cacdd8047689c4f99bb95833ab380c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wanderRadius: 5
-  moveInterval: 10
+  wanderRadius: 50
+  moveInterval: 4
 --- !u!43 &1068768896
 Mesh:
   m_ObjectHideFlags: 0

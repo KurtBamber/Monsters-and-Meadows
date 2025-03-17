@@ -92,6 +92,20 @@ public class MovementManager : MonoBehaviour
                 selectedMonster.Clear();
                 selectedMonster.Add(hit.collider.GetComponent<MonsterAI>());//if so changes the selected monster to that monster
             }
+            else if (hit.collider.CompareTag("Rock"))//checks if a rock has been clicked on
+            {
+                foreach (MonsterAI monster in selectedMonster)
+                {
+                    monster.StartResourceTask(hit.point, hit.collider.gameObject, monsterState.mining);//sends the objects position and the monsters state to the monsterAI script
+                }
+            }
+            else if (hit.collider.CompareTag("Tree"))//checks if a tree has been clicked on
+            {
+                foreach (MonsterAI monster in selectedMonster)
+                {
+                    monster.StartResourceTask(hit.point, hit.collider.gameObject, monsterState.chopping);//sends the objects position and the monsters state to the monsterAI script
+                }
+            }
             else if (selectedMonster.Count > 0)//checks that there is a monster selected
             {
                 foreach (MonsterAI monster in selectedMonster)//moves each monster
@@ -101,8 +115,8 @@ public class MovementManager : MonoBehaviour
 
                 GameObject indicator = Instantiate(indicatorPrefab, hit.point, indicatorPrefab.transform.rotation);//spawns an indicator where clicked
 
-                    Destroy(indicator, 0.5f);//destroys the indicator after 0.3 seconds
-              
+                Destroy(indicator, 0.5f);//destroys the indicator after 0.3 seconds
+
             }
         }
     }

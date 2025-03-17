@@ -4,13 +4,20 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 
-public enum monsterState { idle, wandering, following }
+public enum monsterState { idle, wandering, following, mining, chopping }
 
 public class MonsterAI : MonoBehaviour
 {
     [Header("AI Navigation")]
     private NavMeshAgent agent;
     private WanderBehaviour wanderBehaviour;
+    private MiningBehaviour miningBehaviour;
+    private ChoppingBehaviour choppingBehaviour;
+    private GameObject targetResource;
+
+    [Header("Abilites")]
+    public bool canMine = false;
+    public bool canChop = false;
 
     [Header("States")]
     public monsterState currentState;
@@ -26,7 +33,10 @@ public class MonsterAI : MonoBehaviour
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+
         wanderBehaviour = GetComponent<WanderBehaviour>();
+        miningBehaviour = GetComponent<MiningBehaviour>();
+        choppingBehaviour = GetComponent<ChoppingBehaviour>();
 
         currentTime = 0f;
     }
@@ -83,6 +93,22 @@ public class MonsterAI : MonoBehaviour
                 stateText.text = "Following";
                 stateText.color = Color.green;
                 break;
+            case monsterState.mining:
+                if (canMine)
+                {
+                    stateText.text = "Mining";
+                    stateText.color = Color.gray;
+                    miningBehaviour.StartMining(targetResource);//calls the start mining function from the miningbeahviour script
+                }
+                break;
+            case monsterState.chopping:
+                if (canChop)
+                {
+                    stateText.text = "Chopping";
+                    stateText.color = Color.yellow;
+                    choppingBehaviour.StartChopping(targetResource);//calls the start chopping function from the choppingbeahviour script
+                }
+                break;
         }
     }
 
@@ -103,5 +129,44 @@ public class MonsterAI : MonoBehaviour
 
         isFollowingCommand = false;
         ChangeState(monsterState.wandering);//sets monster back to wandering
+    }
+
+    public void StartResourceTask(Vector3 resourcePosition, GameObject resource, monsterState resourceState)
+    {
+        if (resourceState == monsterState.mining && !canMine || resourceState == monsterState.chopping && !canChop)//checks that the monster can perform the action
+        {
+            Debug.Log("Monster cannot perform this action!");
+            return;
+        }
+
+        isFollowingCommand = true;
+        targetResource = resource;
+        agent.SetDestination(resourcePosition);//sets the agents target to the resource
+        ChangeState(monsterState.following);//makes the monsters state following
+        StartCoroutine(CheckIfArrived(resourceState));//checks when the monsters arrived
+    }
+
+    private IEnumerator CheckIfArrived(monsterState resourceState)
+    {
+        while (agent.pathPending || agent.remainingDistance > agent.stoppingDistance)//only alows the code to continue once the monster has reached its destination
+        {
+            yield return null;
+        }
+
+        isFollowingCommand = false;
+
+        //sets the approriate state depending on their ability
+        if (resourceState == monsterState.mining && canMine)
+        {
+            ChangeState(monsterState.mining);
+        }
+        else if (resourceState == monsterState.chopping && canChop)
+        {
+            ChangeState(monsterState.chopping);
+        }
+        else
+        {
+            ChangeState(monsterState.wandering);
+        }
     }
 }
