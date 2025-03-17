@@ -11,11 +11,12 @@ public class LevelLoader : MonoBehaviour
 
     public void Start()
     {
-        this.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+        this.gameObject.transform.GetChild(0).gameObject.SetActive(false);
     }
 
     public void LoadNextLevel()
     {
+        this.gameObject.transform.GetChild(0).gameObject.SetActive(true);
         StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex + 1));
     }
 
