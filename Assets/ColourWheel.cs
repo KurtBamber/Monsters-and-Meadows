@@ -9,6 +9,12 @@ public class ColourWheel : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public Material playerMat;
     public Color chosenColour;
     public static bool picked;
+    public bool pickedPublic;
+
+    public void Update()
+    {
+        pickedPublic = picked;
+    }
 
     public void OnPointerClick(PointerEventData eventData)
     {
