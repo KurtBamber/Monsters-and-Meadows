@@ -44,6 +44,14 @@ public class AIController : MonoBehaviour
 
     private void Update()
     {
+        if (agent.velocity.magnitude <= 0.15f && isFollowing)
+        {
+            MM.selectedMonster.Clear();
+            isFollowing = false;
+            currentTime = 0.1f;
+            Debug.Log("monster stopped");
+
+        }
 
         if (agent.velocity.magnitude <= 0.15f && isFollowing)
         {
