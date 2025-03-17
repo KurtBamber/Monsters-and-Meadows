@@ -96,10 +96,6 @@ public class AIController : MonoBehaviour
 
         agent.SetDestination(destination);
 
-        if (!MM.selectedMonster.Contains(this))
-        {
-            MonsterWander();
-        }
 
     }
 

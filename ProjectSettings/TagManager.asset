@@ -5,11 +5,13 @@ TagManager:
   serializedVersion: 2
   tags:
   - Monster
+  - Tree
+  - Rock
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Monster
   - Water
   - UI
   - 

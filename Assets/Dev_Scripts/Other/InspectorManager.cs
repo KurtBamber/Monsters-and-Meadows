@@ -43,13 +43,24 @@ public class InspectorManager : MonoBehaviour
     public void UpdateMonsterActivity()
     {
         selectedMonster = MM.selectedMonster[0].gameObject;
-        monsterActivity.text = MM.selectedMonster[0].currentState;
+        monsterActivity.text = MM.selectedMonster[0].GetComponent<MonsterAI>().stateText.text;
 
-        monsterTime = MM.selectedMonster[0].currentTime;
+        if (MM.selectedMonster[0].GetComponent<MonsterAI>().canChop)
+        {
+            monsterTrait.text = "Wood";
+        }
+
+        if (MM.selectedMonster[0].GetComponent<MonsterAI>().canMine)
+        {
+            monsterTrait.text = "Stone";
+        }
+
+
+        monsterTime = MM.selectedMonster[0].GetComponent<MonsterAI>().currentTime;
         radialTimer.fillAmount = monsterTime / MM.selectedMonster[0].intervalBetweenStates;
 
         monsterName.text = selectedMonster.name;
-        monsterTrait.text = selectedMonster.GetComponent<Monster_Master>().monsterTrait + " gatherer";
+        monsterTrait.text = monsterTrait.text + " gatherer";
         
     }
 

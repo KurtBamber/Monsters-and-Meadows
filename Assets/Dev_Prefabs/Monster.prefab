@@ -85,11 +85,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4411898430810289965}
   - component: {fileID: 8165970014208327406}
-  - component: {fileID: 5888596007818149881}
   - component: {fileID: 1105649950063311699}
-  - component: {fileID: 3439632900687593787}
-  - component: {fileID: 2843936134303857006}
-  m_Layer: 0
+  - component: {fileID: 323181552157765802}
+  - component: {fileID: 2169948361993049053}
+  - component: {fileID: 7336705422867476492}
+  m_Layer: 3
   m_Name: Monster
   m_TagString: Monster
   m_Icon: {fileID: 0}
@@ -122,7 +122,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 973088050252705140}
   m_Enabled: 1
   m_AgentTypeID: -1372625422
-  m_Radius: 3
+  m_Radius: 1.61
   m_Speed: 10
   m_Acceleration: 8
   avoidancePriority: 50
@@ -135,29 +135,6 @@ NavMeshAgent:
   m_BaseOffset: 5.74
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &5888596007818149881
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 973088050252705140}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25aa4e4f8fdcdd642b347ccf6ae0fe03, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  agent: {fileID: 0}
-  Monster: {fileID: 4411898430810289965}
-  whichState: 0
-  intervalBetweenStates: 30
-  currentTime: 30
-  moveRadius: 50
-  moveInterval: 4
-  isFollowing: 0
-  movementManager: {fileID: 0}
-  stateText: {fileID: 3121437073859170580}
-  radialTimer: {fileID: 2224573447514619199}
 --- !u!114 &1105649950063311699
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -171,34 +148,40 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monsterTrait: wood
---- !u!54 &3439632900687593787
-Rigidbody:
+--- !u!114 &323181552157765802
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 973088050252705140}
-  serializedVersion: 4
-  m_Mass: 0.1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!136 &2843936134303857006
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15e0b1b7f4ef1184db7071e12da2c785, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canMine: 0
+  canChop: 0
+  currentState: 0
+  intervalBetweenStates: 30
+  currentTime: 0
+  stateText: {fileID: 3121437073859170580}
+  radialTimer: {fileID: 2224573447514619199}
+--- !u!114 &2169948361993049053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 973088050252705140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0cacdd8047689c4f99bb95833ab380c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wanderRadius: 50
+  moveInterval: 4
+--- !u!136 &7336705422867476492
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -217,10 +200,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 1
+  m_Radius: 1.2355804
+  m_Height: 3.637764
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 3.01}
+  m_Center: {x: -0.103652954, y: -4.0464954, z: 0}
 --- !u!1 &2712414261805267996
 GameObject:
   m_ObjectHideFlags: 0
@@ -307,7 +290,6 @@ GameObject:
   - component: {fileID: 2006930699008677581}
   - component: {fileID: 8027213646577697376}
   - component: {fileID: 6852649626874506967}
-  - component: {fileID: 2539018773658330}
   m_Layer: 0
   m_Name: Monster Model
   m_TagString: Untagged
@@ -380,29 +362,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &2539018773658330
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5609568424686614620}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6728339388034611652
 GameObject:
   m_ObjectHideFlags: 0
