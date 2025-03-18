@@ -14,7 +14,6 @@ public class MonsterAI : MonoBehaviour
     private WanderBehaviour wanderBehaviour;
     private MiningBehaviour miningBehaviour;
     private ChoppingBehaviour choppingBehaviour;
-    private GameObject targetResource;
 
     [Header("Abilites")]
     public bool canMine = false;
@@ -45,6 +44,11 @@ public class MonsterAI : MonoBehaviour
     private void Update()
     {
         if (isFollowingCommand)//only allows the rest of the code to run if it is not already following a command
+        {
+            return;
+        }
+
+        if (currentState == monsterState.mining || currentState == monsterState.chopping)
         {
             return;
         }
@@ -99,7 +103,7 @@ public class MonsterAI : MonoBehaviour
                 {
                     stateText.text = "Mining";
                     stateText.color = Color.gray;
-                    miningBehaviour.StartMining(targetResource);//calls the start mining function from the miningbeahviour script
+                    miningBehaviour.StartMining();//calls the start mining function from the miningbeahviour script
                 }
                 break;
             case monsterState.chopping:
@@ -107,7 +111,7 @@ public class MonsterAI : MonoBehaviour
                 {
                     stateText.text = "Chopping";
                     stateText.color = Color.yellow;
-                    choppingBehaviour.StartChopping(targetResource);//calls the start chopping function from the choppingbeahviour script
+                    choppingBehaviour.StartChopping();//calls the start chopping function from the choppingbeahviour script
                 }
                 break;
         }
@@ -129,10 +133,13 @@ public class MonsterAI : MonoBehaviour
         }
 
         isFollowingCommand = false;
-        ChangeState(monsterState.wandering);//sets monster back to wandering
+        if (currentState != monsterState.mining && currentState != monsterState.chopping)
+        {
+            ChangeState(monsterState.wandering);
+        }
     }
 
-    public void StartResourceTask(Vector3 resourcePosition, GameObject resource, monsterState resourceState)
+    public void StartResourceTask(Vector3 resourcePosition, monsterState resourceState)
     {
         if (resourceState == monsterState.mining && !canMine || resourceState == monsterState.chopping && !canChop)//checks that the monster can perform the action
         {
@@ -141,7 +148,6 @@ public class MonsterAI : MonoBehaviour
         }
 
         isFollowingCommand = true;
-        targetResource = resource;
         agent.SetDestination(resourcePosition);//sets the agents target to the resource
         ChangeState(monsterState.following);//makes the monsters state following
         StartCoroutine(CheckIfArrived(resourceState));//checks when the monsters arrived

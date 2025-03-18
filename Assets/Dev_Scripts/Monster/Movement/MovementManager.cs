@@ -111,14 +111,14 @@ public class MovementManager : MonoBehaviour
             {
                 foreach (MonsterAI monster in selectedMonster)
                 {
-                    monster.StartResourceTask(hit.point, hit.collider.gameObject, monsterState.mining);//sends the objects position and the monsters state to the monsterAI script
+                    monster.StartResourceTask(hit.point, monsterState.mining);//sends the objects position and the monsters state to the monsterAI script
                 }
             }
             else if (hit.collider.CompareTag("Tree"))//checks if a tree has been clicked on
             {
                 foreach (MonsterAI monster in selectedMonster)
                 {
-                    monster.StartResourceTask(hit.point, hit.collider.gameObject, monsterState.chopping);//sends the objects position and the monsters state to the monsterAI script
+                    monster.StartResourceTask(hit.point, monsterState.chopping);//sends the objects position and the monsters state to the monsterAI script
                 }
             }
             if (selectedMonster.Count > 0)//checks that there is a monster selected
@@ -130,7 +130,7 @@ public class MovementManager : MonoBehaviour
 
                 GameObject indicator = Instantiate(indicatorPrefab, hit.point, indicatorPrefab.transform.rotation);//spawns an indicator where clicked
 
-                Destroy(indicator, 0.5f);//destroys the indicator after 0.3 seconds
+                Destroy(indicator, 0.5f);//destroys the indicator after 0.5 seconds
 
             }
         }

@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class MiningBehaviour : MonoBehaviour
 {
-    private GameObject targetResource;
+    private MonsterAI monsterAI;
+    public int amount = 5;
+    public float interval = 5f;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        monsterAI = GetComponent<MonsterAI>();
     }
 
     // Update is called once per frame
@@ -18,8 +20,17 @@ public class MiningBehaviour : MonoBehaviour
         
     }
 
-    public void StartMining(GameObject resource)
+    public void StartMining()
     {
-        targetResource = resource;
+        StartCoroutine(MineResource());
+    }
+
+    private IEnumerator MineResource()
+    {
+        while (monsterAI.currentState == monsterState.mining)
+        {
+            ResourceManager.resourceManager.AddStone(amount);
+            yield return new WaitForSeconds(interval);
+        }
     }
 }
