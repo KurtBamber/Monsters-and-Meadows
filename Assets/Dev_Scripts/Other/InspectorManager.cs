@@ -30,7 +30,6 @@ public class InspectorManager : MonoBehaviour
     {
         if(MM.selectedMonster.Count > 0)
         {
-            OpenPanel();
             UpdateMonsterActivity();
         }
         else
@@ -38,6 +37,14 @@ public class InspectorManager : MonoBehaviour
             ClosePanel();
         }
 
+        if (Input.GetKeyDown(KeyCode.I) && !isInspectorOpen)
+        {
+            OpenPanel();
+        }
+        else if(Input.GetKeyDown(KeyCode.I) && isInspectorOpen)
+        {
+            ClosePanel();
+        }
     }
 
     public void UpdateMonsterActivity()
