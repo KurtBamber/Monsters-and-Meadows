@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class ResourceManager : MonoBehaviour
@@ -7,19 +8,13 @@ public class ResourceManager : MonoBehaviour
     public static ResourceManager resourceManager;
     public int totalStone = 0;
     public int totalWood = 0;
+    public TextMeshProUGUI woodAmount, stoneAmount;
 
     // Start is called before the first frame update
     void Start()
     {
         resourceManager = this;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
 
     public void AddStone(int amount)
     {
@@ -33,8 +28,9 @@ public class ResourceManager : MonoBehaviour
         UpdateUI();
     }
 
-    private void UpdateUI()
+    public void UpdateUI()
     {
-
+        woodAmount.text = totalWood.ToString();
+        stoneAmount.text = totalStone.ToString();
     }
 }

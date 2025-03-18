@@ -6,10 +6,11 @@ using UnityEngine.Windows.WebCam;
 public class SettingsManager : MonoBehaviour
 {
     public GameObject settingsUI;
-    public bool isSettingsOpen, isDevModeOn;
-    public GameObject devCheck;
+    public bool isSettingsOpen, isDevModeOn, isWASD;
+    public GameObject devCheck, WASD;
 
     public Camera mainCam, devCam;
+    public Movement Movement;
    
 
     public void Start()
@@ -18,9 +19,11 @@ public class SettingsManager : MonoBehaviour
         settingsUI.SetActive(false);
         devCheck.SetActive(false);
         devCam.gameObject.SetActive(false);
+        WASD.gameObject.SetActive(false);
 
         isSettingsOpen = false;
         isDevModeOn = false;
+        isWASD = false;
 
     }
 
@@ -64,6 +67,22 @@ public class SettingsManager : MonoBehaviour
             mainCam.gameObject.SetActive(false);
 
             isDevModeOn = true;
+        }
+    }
+
+    public void MovementMode()
+    {
+        if (isWASD)
+        {
+            WASD.SetActive(false);
+            Movement.useWASD = false;
+            isWASD = false;
+        }
+        else if (!isWASD)
+        {
+            WASD.SetActive(true);
+            Movement.useWASD = true;
+            isWASD = true;
         }
     }
 }
