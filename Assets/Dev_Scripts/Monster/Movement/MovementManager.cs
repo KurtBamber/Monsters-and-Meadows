@@ -14,6 +14,7 @@ public class MovementManager : MonoBehaviour
     public Canvas canvas;
     public bool isMonsterClicked;
 
+
     // Update is called once per frame
     void Update()
     {

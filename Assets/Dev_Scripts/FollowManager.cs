@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class FollowManager : MonoBehaviour
 {
-    public GameObject mainCam, devCam, objectToFollow;
+    public GameObject mainCam, devCam, objectToFollow, currentCam, Player;
 
     public MovementManager MM;
 
@@ -15,10 +15,26 @@ public class FollowManager : MonoBehaviour
 
     public void Update()
     {
-        currentCamRotation = mainCam.transform.rotation;
+        if(devCam.activeSelf == true)
+        {
+            currentCam = devCam.gameObject;
+        }
+        else if(devCam.activeSelf == false)
+        {
+            currentCam = mainCam.gameObject;
+        }
+
+        currentCamRotation = currentCam.transform.rotation;
+
         if (MM.selectedMonster.Count >= 1)
         {
             objectToFollow = MM.selectedMonster[0].gameObject;
+            FollowObject();
+        }
+
+        if(MM.selectedMonster.Count <= 0)
+        {
+            objectToFollow = Player;
             FollowObject();
         }
 
@@ -37,15 +53,15 @@ public class FollowManager : MonoBehaviour
     {
         if(scrollAmount >= 1)
         {
-            mainCam.transform.LookAt(Vector3.Lerp(mainCam.transform.position, objectToFollow.transform.position, Time.deltaTime * 2.5f));
-            mainCam.transform.LookAt(objectToFollow.transform.position);
-            mainCam.GetComponent<Camera>().fieldOfView = Mathf.Lerp(mainCam.GetComponent<Camera>().fieldOfView, zoomedInView, Time.deltaTime * 2.5f);
+            currentCam.transform.LookAt(Vector3.Lerp(currentCam.transform.position, objectToFollow.transform.position, Time.deltaTime * 2.5f));
+            currentCam.transform.LookAt(objectToFollow.transform.position);
+            currentCam.GetComponent<Camera>().fieldOfView = Mathf.Lerp(currentCam.GetComponent<Camera>().fieldOfView, zoomedInView, Time.deltaTime * 2.5f);
         }
 
         if (scrollAmount <= 0)
         {
-            mainCam.transform.rotation = Quaternion.Lerp(currentCamRotation, defaultCamRotation, Time.deltaTime * 2.5f);
-            mainCam.GetComponent<Camera>().fieldOfView = Mathf.Lerp(mainCam.GetComponent<Camera>().fieldOfView, zoomedOutView, Time.deltaTime * 2.5f);
+            currentCam.transform.rotation = Quaternion.Lerp(currentCamRotation, defaultCamRotation, Time.deltaTime * 2.5f);
+            currentCam.GetComponent<Camera>().fieldOfView = Mathf.Lerp(currentCam.GetComponent<Camera>().fieldOfView, zoomedOutView, Time.deltaTime * 2.5f);
         }
     }
 }
