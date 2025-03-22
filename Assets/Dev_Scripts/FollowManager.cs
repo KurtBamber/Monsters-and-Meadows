@@ -5,16 +5,31 @@ using UnityEngine;
 
 public class FollowManager : MonoBehaviour
 {
-    public GameObject mainCam, devCam, objectToFollow, currentCam, Player;
+    [Header("Following Mechanic")]
+    [Header("Cameras and Objects")]
+    public GameObject mainCam;
+    public GameObject devCam;
+    public GameObject objectToFollow;
+    public GameObject currentCam;
+    public GameObject Player;
 
+    [Header("Zooming Parameters")]
+    public bool canZoom;
+    public float scrollAmount;
+    public float zoomedInView;
+    public float zoomedOutView;
+    public Quaternion currentCamRotation;
+
+    [Header("Going To The Garden")]
     public MovementManager MM;
+    public bool inGarden;
+    public float swappingSpeed;
 
-    public bool canZoom, inGarden;
-
-    public float scrollAmount, zoomedInView, zoomedOutView, swappingSpeed;
-
-    public Quaternion villageCamRotation, currentCamRotation, gardenCamRotation;
-    public Vector3 villageCamPosition, gardenCamPosition;
+    [Header("Positions and Rotations")]
+    public Quaternion villageCamRotation;
+    public Quaternion gardenCamRotation;
+    public Vector3 villageCamPosition;
+    public Vector3 gardenCamPosition;
 
     public void Start()
     {
