@@ -9,20 +9,49 @@ public class FollowManager : MonoBehaviour
 
     public MovementManager MM;
 
-    public float scrollAmount, zoomedInView, zoomedOutView;
+    public bool canZoom, inGarden;
 
-    public Quaternion defaultCamRotation, currentCamRotation;
+    public float scrollAmount, zoomedInView, zoomedOutView, swappingSpeed;
+
+    public Quaternion villageCamRotation, currentCamRotation, gardenCamRotation;
+    public Vector3 villageCamPosition, gardenCamPosition;
+
+    public void Start()
+    {
+        InVillage();
+        inGarden = false;
+    }
 
     public void Update()
     {
-        if(devCam.activeSelf == true)
+
+        if (devCam.activeSelf == true)
         {
             currentCam = devCam.gameObject;
         }
-        else if(devCam.activeSelf == false)
+        else if (devCam.activeSelf == false)
         {
             currentCam = mainCam.gameObject;
         }
+
+        if (!inGarden && Input.GetKeyDown(KeyCode.Return))
+        {
+            inGarden=true;
+        }
+        else if (inGarden && Input.GetKeyDown(KeyCode.Return))
+        {
+            inGarden = false;
+        }
+
+        if (inGarden == true)
+        {
+            InGarden();
+        }
+        else
+        {
+            InVillage();
+        }
+
 
         currentCamRotation = currentCam.transform.rotation;
 
@@ -38,29 +67,42 @@ public class FollowManager : MonoBehaviour
             FollowObject();
         }
 
-        if(Input.mouseScrollDelta.y > 0 && scrollAmount < 1)
+        if(Input.mouseScrollDelta.y > 0 && scrollAmount < 1 && canZoom)
         {
             scrollAmount += 1;
         }
 
-        if (Input.mouseScrollDelta.y < 0 && scrollAmount > -0)
+        if (Input.mouseScrollDelta.y < 0 && scrollAmount > -0 && canZoom)
         {
             scrollAmount -= 1;
         }
     }
+    public void InGarden()
+    {
+        canZoom = false;
+        currentCam.transform.position = (Vector3.Lerp(currentCam.transform.position, gardenCamPosition, Time.deltaTime * swappingSpeed));
+        currentCam.transform.rotation = (Quaternion.Lerp(currentCam.transform.rotation, gardenCamRotation, Time.deltaTime * 2.5f));
+    }
+
+    public void InVillage()
+    {
+        canZoom = true;
+        currentCam.transform.position = (Vector3.Lerp(currentCam.transform.position, villageCamPosition, Time.deltaTime * swappingSpeed));
+        currentCam.transform.rotation = (Quaternion.Lerp(currentCam.transform.rotation, villageCamRotation, Time.deltaTime * 2.5f));
+    }
 
     public void FollowObject()
     {
-        if(scrollAmount >= 1)
+        if(scrollAmount >= 1 && canZoom)
         {
             currentCam.transform.LookAt(Vector3.Lerp(currentCam.transform.position, objectToFollow.transform.position, Time.deltaTime * 2.5f));
             currentCam.transform.LookAt(objectToFollow.transform.position);
             currentCam.GetComponent<Camera>().fieldOfView = Mathf.Lerp(currentCam.GetComponent<Camera>().fieldOfView, zoomedInView, Time.deltaTime * 2.5f);
         }
 
-        if (scrollAmount <= 0)
+        if (scrollAmount <= 0 && canZoom)
         {
-            currentCam.transform.rotation = Quaternion.Lerp(currentCamRotation, defaultCamRotation, Time.deltaTime * 2.5f);
+            currentCam.transform.rotation = Quaternion.Lerp(currentCamRotation, villageCamRotation, Time.deltaTime * 2.5f);
             currentCam.GetComponent<Camera>().fieldOfView = Mathf.Lerp(currentCam.GetComponent<Camera>().fieldOfView, zoomedOutView, Time.deltaTime * 2.5f);
         }
     }
