@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7c998dc495cee246be1130a637dd49c, type: 3}
+  m_Name: MiningSeed
+  m_EditorClassIdentifier: 
+  seedName: Mining Seed
+  seedIcon: {fileID: 21300000, guid: 50d9ce5070e10a94d9e646308f210f7f, type: 3}
+  monsterPrefab: {fileID: 973088050252705140, guid: 7dd62dbb3e73a654ab038cc4f763e48f, type: 3}
