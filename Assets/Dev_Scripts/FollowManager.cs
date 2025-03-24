@@ -39,16 +39,15 @@ public class FollowManager : MonoBehaviour
 
     public void Update()
     {
-
-        if (devCam.activeSelf == true)
-        {
-            currentCam = devCam.gameObject;
-        }
-        else if (devCam.activeSelf == false)
-        {
-            currentCam = mainCam.gameObject;
-        }
-
+            if (devCam.activeSelf == true)
+            {
+                currentCam = devCam.gameObject;
+            }
+            else if (devCam.activeSelf == false)
+            {
+                currentCam = mainCam.gameObject;
+            }
+        
         if (!inGarden && Input.GetKeyDown(KeyCode.Return))
         {
             inGarden=true;
