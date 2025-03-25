@@ -18,7 +18,64 @@ public class Hotbar : MonoBehaviour
     public int maxSlots = 6;
     public Image[] slotImages;
     public TextMeshProUGUI[] slotQuantities;
-    public Sprite empty;
+    private int selectedSlot = 0;
+
+    private void Update()
+    {
+        HotbarSelection();
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            PlantSeed();
+        }
+    }
+
+    private void HotbarSelection()
+    {
+        for (int i = 0; i < maxSlots; i++)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1 + i))
+            {
+                selectedSlot = i;
+                UpdateUI();
+            }
+        }
+    }
+
+    private void PlantSeed()
+    {
+        if (slots.Count == 0 || selectedSlot >= slots.Count)
+        {
+            return;
+        }
+
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            if (hit.collider.CompareTag("Plantable"))
+            {
+                UseSeed(selectedSlot, hit.point);
+            }
+        }
+    }
+
+    public void UseSeed(int slotIndex, Vector3 plantPosition)
+    {
+        if (slotIndex < slots.Count && slots[slotIndex].seed != null)
+        {
+            Instantiate(slots[slotIndex].seed.monsterPrefab, plantPosition, Quaternion.identity);
+            slots[slotIndex].quantity--;
+
+            if (slots[slotIndex].quantity <= 0)
+            {
+                slots.RemoveAt(slotIndex);
+            }
+
+            UpdateUI();
+        }
+    }
 
     public void AddSeed(Seed newSeed)
     {
@@ -52,7 +109,7 @@ public class Hotbar : MonoBehaviour
             }
             else
             {
-                slotImages[i].sprite = empty;
+                slotImages[i].sprite = null;
                 slotQuantities[i].text = "";
             }
         }

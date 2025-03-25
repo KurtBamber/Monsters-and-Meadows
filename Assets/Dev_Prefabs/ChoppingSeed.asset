@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: ChoppingSeed
   m_EditorClassIdentifier: 
   seedName: Chopping Seed
-  seedIcon: {fileID: 21300000, guid: 8a8e8b0e0f0f4cd41a2d112afc1195e4, type: 3}
+  seedIcon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
   monsterPrefab: {fileID: 909362457549217158, guid: 107877b7d83a74d418bfa4f933acccd8, type: 3}
