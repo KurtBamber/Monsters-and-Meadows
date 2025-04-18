@@ -15,3 +15,5 @@ MonoBehaviour:
   seedName: Mining Seed
   seedIcon: {fileID: 21300000, guid: 50d9ce5070e10a94d9e646308f210f7f, type: 3}
   monsterPrefab: {fileID: 973088050252705140, guid: 7dd62dbb3e73a654ab038cc4f763e48f, type: 3}
+  growthTime: 10
+  plantPrefab: {fileID: 791968693480556185, guid: 18ad5448225c8f649a5072ecc974ff90, type: 3}

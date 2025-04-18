@@ -14,4 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seedName: Chopping Seed
   seedIcon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
-  monsterPrefab: {fileID: 909362457549217158, guid: 107877b7d83a74d418bfa4f933acccd8, type: 3}
+  monsterPrefab: {fileID: 973088050252705140, guid: 7dd62dbb3e73a654ab038cc4f763e48f, type: 3}
+  growthTime: 10
+  plantPrefab: {fileID: 791968693480556185, guid: 18ad5448225c8f649a5072ecc974ff90, type: 3}

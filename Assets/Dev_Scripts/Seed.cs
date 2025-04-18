@@ -9,4 +9,6 @@ public class Seed : ScriptableObject
     public string seedName;
     public Sprite seedIcon;
     public GameObject monsterPrefab;
+    public float growthTime;
+    public GameObject plantPrefab;
 }

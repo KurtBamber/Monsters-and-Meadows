@@ -8,11 +8,11 @@ public class SeedPickup : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player"))//checks if the thing colliding with it is the player
         {
-            Hotbar hotbar = other.GetComponent<Hotbar>();
-            hotbar.AddSeed(seedData);
-            Destroy(gameObject);
+            Hotbar hotbar = other.GetComponent<Hotbar>();//gets the players hotbar
+            hotbar.AddSeed(seedData);//sends the correct seed data to the hotbar
+            Destroy(gameObject);//destorys the seed
         }
     }
 }
