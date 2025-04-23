@@ -89,6 +89,7 @@ GameObject:
   - component: {fileID: 323181552157765802}
   - component: {fileID: 2169948361993049053}
   - component: {fileID: 7336705422867476492}
+  - component: {fileID: 5430415856127523256}
   m_Layer: 3
   m_Name: Monster
   m_TagString: Monster
@@ -147,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3a93795bb1a29b498302c14d5e26fb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterTrait: wood
+  monsterTrait: stone
 --- !u!114 &323181552157765802
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -160,7 +161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15e0b1b7f4ef1184db7071e12da2c785, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canMine: 0
+  canMine: 1
   canChop: 0
   currentState: 0
   intervalBetweenStates: 30
@@ -204,6 +205,20 @@ CapsuleCollider:
   m_Height: 3.637764
   m_Direction: 1
   m_Center: {x: -0.103652954, y: -4.0464954, z: 0}
+--- !u!114 &5430415856127523256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 973088050252705140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76935306edc646c43a43f64b4ef230b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  amount: 5
+  interval: 5
 --- !u!1 &2712414261805267996
 GameObject:
   m_ObjectHideFlags: 0
@@ -291,7 +306,7 @@ GameObject:
   - component: {fileID: 8027213646577697376}
   - component: {fileID: 6852649626874506967}
   m_Layer: 0
-  m_Name: Monster Model
+  m_Name: MonsterModel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -510,7 +525,7 @@ GameObject:
   - component: {fileID: 266404703295115393}
   - component: {fileID: 2172219625272830873}
   m_Layer: 7
-  m_Name: MonsterUI
+  m_Name: MonsterUi
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
