@@ -38,7 +38,7 @@ public class CameraManager : MonoBehaviour
         {
             mainCamera.enabled = true;
             zoomedOutCamera.enabled = false;
-            mainCamera.fieldOfView = Mathf.Lerp(mainCamera.fieldOfView, targetZoom, Time.deltaTime * 5f);
+            mainCamera.fieldOfView = Mathf.Lerp(mainCamera.fieldOfView, targetZoom, Time.deltaTime);
         }
     }
 }

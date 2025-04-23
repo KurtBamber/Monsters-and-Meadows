@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c7c998dc495cee246be1130a637dd49c, type: 3}
-  m_Name: MiningSeed
+  m_Name: BigChoppingSeed
   m_EditorClassIdentifier: 
-  seedName: Mining Seed
-  seedIcon: {fileID: 21300000, guid: f3032b5b957d0f8418848a42abac8115, type: 3}
-  monsterPrefab: {fileID: 973088050252705140, guid: 7dd62dbb3e73a654ab038cc4f763e48f, type: 3}
-  growthTime: 10
-  plantPrefab: {fileID: 791968693480556185, guid: 18ad5448225c8f649a5072ecc974ff90, type: 3}
+  seedName: 
+  seedIcon: {fileID: 0}
+  monsterPrefab: {fileID: 0}
+  growthTime: 0
+  plantPrefab: {fileID: 0}
