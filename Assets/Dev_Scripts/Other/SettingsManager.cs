@@ -9,16 +9,16 @@ public class SettingsManager : MonoBehaviour
     public bool isSettingsOpen, isDevModeOn, isWASD;
     public GameObject devCheck, WASD;
 
-    public Camera mainCam, devCam;
+    public Camera mainCam;
     public Movement Movement;
-   
+    int oldMask = Camera.main.cullingMask;
+
 
     public void Start()
     {
         settingsUI = this.gameObject.transform.GetChild(0).gameObject;
         settingsUI.SetActive(false);
         devCheck.SetActive(false);
-        devCam.gameObject.SetActive(false);
         WASD.gameObject.SetActive(false);
 
         isSettingsOpen = false;
@@ -55,7 +55,7 @@ public class SettingsManager : MonoBehaviour
         if (isDevModeOn)
         {
             devCheck.SetActive(false);
-            devCam.gameObject.SetActive(false);
+            Camera.main.cullingMask = oldMask;
             mainCam.gameObject.SetActive(true);
 
             isDevModeOn = false;
@@ -63,8 +63,7 @@ public class SettingsManager : MonoBehaviour
         else if (!isDevModeOn)
         {
             devCheck.SetActive(true);
-            devCam.gameObject.SetActive(true);
-            mainCam.gameObject.SetActive(false);
+            Camera.main.cullingMask = -1;
 
             isDevModeOn = true;
         }
