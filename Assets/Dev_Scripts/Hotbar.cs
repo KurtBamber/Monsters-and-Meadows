@@ -19,6 +19,12 @@ public class Hotbar : MonoBehaviour
     public Image[] slotImages;//ui images for each slot
     public TextMeshProUGUI[] slotQuantities;//ui text for the quantites of each seed
     private int selectedSlot = 0;//the currently selected slot, starts as 0
+    public GameObject hotBar;
+
+    private void Start()
+    {
+        hotBar.SetActive(true);
+    }
 
     private void Update()
     {

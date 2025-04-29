@@ -108,7 +108,9 @@ public class Movement : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);//gets the point where the player clicked
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit))
+        int groundLayerMask = LayerMask.GetMask("Ground");
+
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, groundLayerMask))
         {
             agent.SetDestination(hit.point);//sets the agents destination to the point clicked
 
