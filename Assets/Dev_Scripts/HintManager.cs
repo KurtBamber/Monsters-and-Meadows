@@ -15,8 +15,8 @@ public class HintManager : MonoBehaviour
     public CanvasGroup canvasGroup;
     public float fadeDuration = 0.5f;
     private bool hasMoved = false;
-    private bool hasInteracted = false;
     private bool hasScrolled = false;
+    private bool hasPlanted = false;
 
     void Start()
     {
@@ -48,13 +48,10 @@ public class HintManager : MonoBehaviour
 
     public void ShowInteractHint()
     {
-        if (!hasInteracted)
-        {
-            hintText.text = "Left-click to interact.";
-            mouseHintImage.enabled = true;
-            mouseHintImage.sprite = leftClickSprite;
-            StartCoroutine(FadeIn());
-        }
+        hintText.text = "Left-click to interact.";
+        mouseHintImage.enabled = true;
+        mouseHintImage.sprite = leftClickSprite;
+        StartCoroutine(FadeIn());
     }
 
     public void ShowScrollHint()
@@ -68,15 +65,31 @@ public class HintManager : MonoBehaviour
         }
     }
 
+    public void ShowPlantHint()
+    {
+        if (!hasPlanted)
+        {
+            hintText.text = "Left-click on a plot to plant a monster.";
+            mouseHintImage.enabled = true;
+            mouseHintImage.sprite = leftClickSprite;
+            StartCoroutine(FadeIn());
+        }
+    }
+
     public void HideScrollHint()
     {
         hasScrolled = true;
         StartCoroutine(FadeOut());
     }
 
+    public void HidePlantHint()
+    {
+        hasPlanted = true;
+        StartCoroutine(FadeOut());
+    }
+
     public void PlayerInteracted()
     {
-        hasInteracted = true;
         StartCoroutine(FadeOut());
     }
 

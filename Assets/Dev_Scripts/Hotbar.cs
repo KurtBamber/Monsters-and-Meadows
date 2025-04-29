@@ -20,6 +20,7 @@ public class Hotbar : MonoBehaviour
     public TextMeshProUGUI[] slotQuantities;//ui text for the quantites of each seed
     private int selectedSlot = 0;//the currently selected slot, starts as 0
     public GameObject hotBar;
+    private bool firstSeed = true;
 
     private void Start()
     {
@@ -63,6 +64,11 @@ public class Hotbar : MonoBehaviour
             if (hit.collider.CompareTag("Plantable"))//checks if the clicked area is plantable
             {
                 UseSeed(selectedSlot, hit.point);//if so uses the selected seed and plants it at the clicked location
+                if (firstSeed)
+                {
+                    firstSeed = false;
+                    FindObjectOfType<HintManager>().HidePlantHint();
+                }
             }
         }
     }
@@ -116,7 +122,7 @@ public class Hotbar : MonoBehaviour
             }
             else
             {
-                slotImages[i].sprite = null;//if the slot is empty set the image to nothing
+                slotImages[i].enabled = false;//if the slot is empty set the image to nothing
                 slotQuantities[i].text = "";
             }
         }

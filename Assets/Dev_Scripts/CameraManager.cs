@@ -20,7 +20,8 @@ public class CameraManager : MonoBehaviour
 
     private Camera cam;
     private float targetFOV;
-    private bool isZoomedOut = false;
+    public bool isZoomedOut = false;
+    public bool cameraControlEnabled = true;
 
     void Start()
     {
@@ -30,6 +31,10 @@ public class CameraManager : MonoBehaviour
 
     void LateUpdate()
     {
+        if (!cameraControlEnabled)
+        {
+            return;
+        }
         float scroll = Input.GetAxis("Mouse ScrollWheel");//gets the scroll wheel input as a float value
         targetFOV -= scroll * zoomSpeed * 10f;//each scroll registers as 0.1 or -0.1 
         targetFOV = Mathf.Clamp(targetFOV, minFOV, maxFOV);//ensures that the fov cant go above/below the min/max

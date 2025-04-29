@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEngine.Assertions.Must;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class DialogueManager : MonoBehaviour
     private Coroutine typingCoroutine;
     public Button button;
     private bool waitingForZoom = false;
+    public bool waitingForHarvest = false;
+    public Seed firstSeed;
 
     private void Start()
     {
@@ -109,7 +112,34 @@ public class DialogueManager : MonoBehaviour
             currentSentence = currentSentence.Replace("[PULLIVAN]", "");
             FindObjectOfType<HintManager>().ShowInteractHint();
         }
+
+        if (currentSentence.Contains("[PAN]"))
+        {
+            currentSentence = currentSentence.Replace("[PAN]", "");
+            StartCoroutine(PanCamera());
+        }
+
+        if (currentSentence.Contains("[HARVEST]") && !waitingForHarvest)
+        {
+            waitingForHarvest = true;
+            currentSentence = currentSentence.Replace("[HARVEST]", "");
+            dialogueText.text = currentSentence;
+            FindObjectOfType<HintManager>().ShowInteractHint();
+            return;
+        }
         typingCoroutine = StartCoroutine(TypeSentence(currentSentence));
+    }
+
+    IEnumerator PanCamera()
+    {
+        Camera.main.GetComponent<CameraManager>().cameraControlEnabled = false;
+        Camera.main.GetComponent<CameraManager>().isZoomedOut = false;
+        FindObjectOfType<FollowManager>().inGarden = true;
+        yield return new WaitForSeconds(4f);
+        FindObjectOfType<FollowManager>().inGarden = false;
+        Camera.main.GetComponent<CameraManager>().cameraControlEnabled = true;
+        FindObjectOfType<Hotbar>().AddSeed(firstSeed);
+        FindObjectOfType<HintManager>().ShowPlantHint();
     }
 
     IEnumerator TypeSentence(string sentence)

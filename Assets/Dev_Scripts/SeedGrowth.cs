@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 
 public class SeedGrowth : MonoBehaviour
@@ -9,7 +10,10 @@ public class SeedGrowth : MonoBehaviour
     public GameObject mediumStage;
     public GameObject finalStage;
 
-    private bool isFullyGrown = false;
+    public bool isFullyGrown = false;
+    private bool firstTime = true;
+    private bool firstHarvest = true;
+    public Dialogue dialogue;
 
     private void Update()
     {
@@ -17,6 +21,19 @@ public class SeedGrowth : MonoBehaviour
         {
             Harvest();
         }
+
+        if (isFullyGrown && firstTime)
+        {
+            firstTime = false;
+            StartCoroutine(HarvestDialogue());
+        }
+    }
+
+    IEnumerator HarvestDialogue()
+    {
+        yield return null;
+
+        FindObjectOfType<DialogueManager>().StartDialogue(dialogue);
     }
 
     public void StartGrowing(Seed seed)
@@ -50,6 +67,13 @@ public class SeedGrowth : MonoBehaviour
             if (hit.collider.CompareTag("FullyGrown"))//checks if the clicked object has the fully grown tag
             {
                 Instantiate(seedData.monsterPrefab, transform.position, Quaternion.identity);//spawns the corresponding monster
+                if (firstHarvest)
+                {
+                    firstHarvest = false;
+                    FindObjectOfType<DialogueManager>().waitingForHarvest = false;
+                    FindObjectOfType<HintManager>().PlayerInteracted();
+                    FindObjectOfType<DialogueManager>().DisplayNextSentence();
+                }
                 Destroy(gameObject);//destroys the seed
             }
         }

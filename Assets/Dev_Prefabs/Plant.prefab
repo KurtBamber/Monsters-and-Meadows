@@ -49,6 +49,7 @@ MonoBehaviour:
   smallStage: {fileID: 909362457549217158, guid: 107877b7d83a74d418bfa4f933acccd8, type: 3}
   mediumStage: {fileID: 6677169909816059700, guid: f4e53545189045e4282324c9c724e9f9, type: 3}
   finalStage: {fileID: 2414741265370395160}
+  dialogue: {fileID: 11400000, guid: 55d685be1593a464b824935d4f7605d3, type: 2}
 --- !u!1001 &6623846523057520204
 PrefabInstance:
   m_ObjectHideFlags: 0

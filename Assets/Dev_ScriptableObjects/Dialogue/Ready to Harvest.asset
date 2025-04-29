@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 83b2030f909db8946936a66575b43798, type: 3}
-  m_Name: 1. Intro
+  m_Name: Ready to Harvest
   m_EditorClassIdentifier: 
-  speakerName: ???
-  speakerImage: {fileID: 21300000, guid: f3032b5b957d0f8418848a42abac8115, type: 3}
+  speakerName: Ivan-Tory
+  speakerImage: {fileID: 21300000, guid: bfa37d2d96fffb243b5986a5f2a46c87, type: 3}
   sentences:
-  - Hello?------Is somone there...?
-  - Please help me...                                                        Im stuck...
+  - It looks like the monster is back to its usual self, give them a hand out of
+    the soil.[HARVEST]
