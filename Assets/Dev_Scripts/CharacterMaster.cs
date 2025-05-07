@@ -13,6 +13,7 @@ public class CharacterMaster : MonoBehaviour
     public static string Name;
     public string shownName;
     public static Material characterMat;
+    public Material characterMatPublic;
 
     public void Start()
     {
@@ -20,7 +21,8 @@ public class CharacterMaster : MonoBehaviour
     }
     public void Update()
     {
-        if(SceneManager.GetActiveScene().buildIndex == 1)
+        characterMatPublic = characterMat;
+        if (SceneManager.GetActiveScene().buildIndex == 1)
         {
             nameText.text = inputName.text;
         }
