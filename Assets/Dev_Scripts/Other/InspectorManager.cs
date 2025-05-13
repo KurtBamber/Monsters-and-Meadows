@@ -10,11 +10,14 @@ public class InspectorManager : MonoBehaviour
     public bool isInspectorOpen;
     public MovementManager MM;
 
-    public TextMeshProUGUI monsterName, monsterTrait, monsterActivity;
+    public TextMeshProUGUI monsterTrait, monsterActivity;
 
     public float monsterTime;
 
     public Image radialTimer;
+    public Material outlineMaterial;
+    public Button nextButton;
+    private int currentMonster = 0;
 
 
     public void Start()
@@ -23,7 +26,7 @@ public class InspectorManager : MonoBehaviour
         inspectorUI.SetActive(false);
 
         isInspectorOpen = false;
-
+        nextButton.onClick.AddListener(ShowNextMonster);
     }
 
     public void Update()
@@ -49,26 +52,41 @@ public class InspectorManager : MonoBehaviour
 
     public void UpdateMonsterActivity()
     {
-        selectedMonster = MM.selectedMonster[0].gameObject;
-        monsterActivity.text = MM.selectedMonster[0].GetComponent<MonsterAI>().stateText.text;
-
-        if (MM.selectedMonster[0].GetComponent<MonsterAI>().canChop)
+        selectedMonster = MM.selectedMonster[currentMonster].gameObject;
+        monsterActivity.text = MM.selectedMonster[currentMonster].GetComponent<MonsterAI>().stateText.text;
+        foreach (var monsters in MM.selectedMonster)
         {
-            monsterTrait.text = "Wood";
+            monsters.GetComponentInChildren<Renderer>().material = outlineMaterial;
         }
 
-        if (MM.selectedMonster[0].GetComponent<MonsterAI>().canMine)
+        if (MM.selectedMonster[currentMonster].GetComponent<MonsterAI>().canChop)
         {
-            monsterTrait.text = "Stone";
+            monsterTrait.text = "Lumberer";
+        }
+        else if (MM.selectedMonster[currentMonster].GetComponent<MonsterAI>().canMine)
+        {
+            monsterTrait.text = "Miner";
+        }
+        else if (MM.selectedMonster[currentMonster].GetComponent<MonsterAI>().canBuild)
+        {
+            monsterTrait.text = "Builder";
         }
 
 
-        monsterTime = MM.selectedMonster[0].GetComponent<MonsterAI>().currentTime;
-        radialTimer.fillAmount = monsterTime / MM.selectedMonster[0].intervalBetweenStates;
+        monsterTime = MM.selectedMonster[currentMonster].GetComponent<MonsterAI>().currentTime;
+        radialTimer.fillAmount = monsterTime / MM.selectedMonster[currentMonster].intervalBetweenStates;
+        FindObjectOfType<CameraManager>().selectedMonster = MM.selectedMonster[currentMonster].transform;
+    }
 
-        monsterName.text = selectedMonster.name;
-        monsterTrait.text = monsterTrait.text + " gatherer";
-        
+    public void ShowNextMonster()
+    {
+        Debug.Log("Next button clicked!");
+        currentMonster++;
+        if (currentMonster >= MM.selectedMonster.Count)
+        {
+            currentMonster = 0;
+        }
+        UpdateMonsterActivity();
     }
 
 

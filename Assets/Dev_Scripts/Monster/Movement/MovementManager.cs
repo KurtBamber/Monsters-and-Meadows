@@ -53,8 +53,12 @@ public class MovementManager : MonoBehaviour
             isMonsterClicked = false;
         }
 
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetKeyDown(KeyCode.Space) || selectedMonster.Count == 0)
         {
+            foreach (var monsters in selectedMonster)
+            {
+                monsters.GetComponentInChildren<Renderer>().material = null;
+            }
             selectedMonster.Clear();
         }
     }
@@ -71,15 +75,24 @@ public class MovementManager : MonoBehaviour
             Mathf.Abs(screenStartPos.y - screenEndPos.y)
         );
 
-        selectedMonster.Clear();//clears any previously selected monsters
+        List<MonsterAI> newSelection = new List<MonsterAI>();
 
         foreach (GameObject monster in GameObject.FindGameObjectsWithTag("Monster"))//goes through all the monsters in the scene
         {
             Vector3 screenPos = Camera.main.WorldToScreenPoint(monster.transform.position);//converts the monsters world pos to screen space
             if (selectionRect.Contains(screenPos))//checks if the monsters are within the selection area
             {
-                selectedMonster.Add(monster.GetComponent<MonsterAI>());//adds the monster to the list
+                newSelection.Add(monster.GetComponent<MonsterAI>());//adds the monster to the list
             }
+        }
+
+        if (newSelection.Count > 0)
+        {
+            foreach (var monsters in selectedMonster)
+            {
+                monsters.GetComponentInChildren<Renderer>().material = null;
+            }
+            selectedMonster = newSelection;
         }
     }
 
