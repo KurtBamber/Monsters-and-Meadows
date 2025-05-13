@@ -20084,7 +20084,8 @@ MonoBehaviour:
   monsterTime: 0
   radialTimer: {fileID: 550954070}
   outlineMaterial: {fileID: 2100000, guid: 53a21de6bd1601f449b48900b6feef4c, type: 2}
-  nextButton: {fileID: 0}
+  nextButton: {fileID: 352825015}
+  hotbar: {fileID: 1658699156}
 --- !u!4 &555796757
 Transform:
   m_ObjectHideFlags: 0
@@ -78147,7 +78148,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: -58, y: 209}
+  m_AnchoredPosition: {x: -58, y: -275}
   m_SizeDelta: {x: 1500, y: 1000}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &2075707890

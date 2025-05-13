@@ -18,6 +18,7 @@ public class InspectorManager : MonoBehaviour
     public Material outlineMaterial;
     public Button nextButton;
     private int currentMonster = 0;
+    public Canvas hotbar;
 
 
     public void Start()
@@ -94,6 +95,7 @@ public class InspectorManager : MonoBehaviour
     {
         isInspectorOpen = true;
         inspectorUI.SetActive(true);
+        hotbar.enabled = false;
     }
 
     public void ClosePanel()
@@ -102,6 +104,7 @@ public class InspectorManager : MonoBehaviour
         {
             inspectorUI.SetActive(false);
             isInspectorOpen = false;
+            hotbar.enabled = true;
         }
     }
 }
