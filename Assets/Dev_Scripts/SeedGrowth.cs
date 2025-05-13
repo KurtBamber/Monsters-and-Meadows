@@ -66,7 +66,11 @@ public class SeedGrowth : MonoBehaviour
         {
             if (hit.collider.CompareTag("FullyGrown"))//checks if the clicked object has the fully grown tag
             {
-                Instantiate(seedData.monsterPrefab, transform.position, Quaternion.identity);//spawns the corresponding monster
+                GameObject monster = Instantiate(seedData.monsterPrefab, transform.position, Quaternion.identity);//spawns the corresponding monster
+                MonsterAI monsterAI = monster.GetComponent<MonsterAI>();
+                monsterAI.monsterType = seedData.monsterType;
+                monsterAI.WhatType();
+
                 if (firstHarvest)
                 {
                     firstHarvest = false;

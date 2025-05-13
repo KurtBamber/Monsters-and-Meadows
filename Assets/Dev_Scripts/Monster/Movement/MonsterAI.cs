@@ -1,30 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
+using static MonsterType;
 
-public enum monsterState { idle, wandering, following, mining, chopping }
+public enum monsterState { idle, wandering, following, mining, chopping, building }
 
 public class MonsterAI : MonoBehaviour
 {
     [Header("AI Navigation")]
-    private NavMeshAgent agent;
+    public NavMeshAgent agent;
     private WanderBehaviour wanderBehaviour;
     private MiningBehaviour miningBehaviour;
+    private BuildingBehaviour buildingBehaviour;
     private ChoppingBehaviour choppingBehaviour;
 
     [Header("Abilites")]
     public bool canMine = false;
     public bool canChop = false;
+    public bool canBuild = false;
+    public MonsterType monsterType;
+    private EnergySystem energySystem;
+    private HouseManager houseManager;
 
     [Header("States")]
     public monsterState currentState;
     public float intervalBetweenStates = 30;//time before changing states
     private int whichState = 0;
     public float currentTime;
-    private bool isFollowingCommand = false;
+    public bool isFollowingCommand = false;
 
     [Header("UI")]
     public TextMeshProUGUI stateText;
@@ -33,22 +40,47 @@ public class MonsterAI : MonoBehaviour
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        energySystem = GetComponent<EnergySystem>();
+        houseManager = FindObjectOfType<HouseManager>();
 
         wanderBehaviour = GetComponent<WanderBehaviour>();
         miningBehaviour = GetComponent<MiningBehaviour>();
         choppingBehaviour = GetComponent<ChoppingBehaviour>();
+        buildingBehaviour = GetComponent<BuildingBehaviour>();
 
         currentTime = 0f;
     }
 
+    public void WhatType()
+    {
+        switch (monsterType.role)
+        {
+            case MonsterRole.Lumber:
+                canChop = true;
+                break;
+            case MonsterRole.Miner:
+                canMine = true;
+                break;
+            case MonsterRole.Builder:
+                canBuild = true;
+                break;
+        }
+    }
+
     private void Update()
     {
+        if (energySystem.isLowEnegry && !isFollowingCommand)
+        {
+            Recharge();
+            return;
+        }
+
         if (isFollowingCommand)//only allows the rest of the code to run if it is not already following a command
         {
             return;
         }
 
-        if (currentState == monsterState.mining || currentState == monsterState.chopping)
+        if (currentState == monsterState.mining || currentState == monsterState.chopping || currentState == monsterState.building)
         {
             return;
         }
@@ -92,7 +124,7 @@ public class MonsterAI : MonoBehaviour
                 stateText.text = "Wandering";
                 stateText.color = Color.blue;
                 currentTime = intervalBetweenStates;
-                StartCoroutine(wanderBehaviour.Wander());//starts the wander coroutine form the wanderbehaviour script
+                StartCoroutine(wanderBehaviour.Wander());//starts the wander coroutine from the wanderbehaviour script
                 break;
             case monsterState.following:
                 stateText.text = "Following";
@@ -114,15 +146,26 @@ public class MonsterAI : MonoBehaviour
                     choppingBehaviour.StartChopping();//calls the start chopping function from the choppingbeahviour script
                 }
                 break;
+            case monsterState.building:
+                if (canBuild)
+                {
+                    stateText.text = "Building";
+                    stateText.color = Color.magenta;
+                    agent.isStopped = true;
+                }
+                break;
         }
     }
 
     public void MoveTo(Vector3 destination)
     {
-        isFollowingCommand = true;
-        agent.SetDestination(destination);//moves the agent to where clicked
-        ChangeState(monsterState.following);
-        StartCoroutine(CheckIfStopped());//checks when the monster has reached its destintaion
+        if (buildingBehaviour == null || !buildingBehaviour.isBusy)
+        {
+            isFollowingCommand = true;
+            agent.SetDestination(destination);//moves the agent to where clicked
+            ChangeState(monsterState.following);
+            StartCoroutine(CheckIfStopped());//checks when the monster has reached its destintaion
+        }
     }
 
     private IEnumerator CheckIfStopped()
@@ -133,7 +176,7 @@ public class MonsterAI : MonoBehaviour
         }
 
         isFollowingCommand = false;
-        if (currentState != monsterState.mining && currentState != monsterState.chopping)
+        if (currentState != monsterState.mining && currentState != monsterState.chopping && currentState != monsterState.building)
         {
             ChangeState(monsterState.wandering);
         }
@@ -175,5 +218,31 @@ public class MonsterAI : MonoBehaviour
         {
             ChangeState(monsterState.wandering);
         }
+    }
+
+    public void Recharge()
+    {
+        House house = houseManager.AvailableHouses(monsterType.role);
+        isFollowingCommand = true;
+        ChangeState(monsterState.idle);
+        if (house != null)
+        {
+            agent.SetDestination(house.transform.position);
+            agent.isStopped = false;
+            ChangeState(monsterState.following);
+            StartCoroutine(EnterHouse(house));
+        }
+    }
+
+    private IEnumerator EnterHouse(House house)
+    { 
+        while (agent.pathPending || agent.remainingDistance > agent.stoppingDistance)
+        {
+            yield return null;
+        }
+
+        house.EnterHouse(energySystem);
+        energySystem.StartRecharging(house);
+        isFollowingCommand = false;
     }
 }

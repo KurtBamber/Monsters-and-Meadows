@@ -6,12 +6,13 @@ public class MiningBehaviour : MonoBehaviour
 {
     private MonsterAI monsterAI;
     public int amount = 5;
-    public float interval = 5f;
+    public float interval;
 
     // Start is called before the first frame update
     void Start()
     {
         monsterAI = GetComponent<MonsterAI>();
+        interval = monsterAI.monsterType.speed;
     }
 
     // Update is called once per frame
@@ -30,6 +31,7 @@ public class MiningBehaviour : MonoBehaviour
         while (monsterAI.currentState == monsterState.mining)
         {
             ResourceManager.resourceManager.AddStone(amount);
+            GetComponent<EnergySystem>().DrainEnergy(10f);
             yield return new WaitForSeconds(interval);
         }
     }

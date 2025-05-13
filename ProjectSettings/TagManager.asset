@@ -11,6 +11,7 @@ TagManager:
   - Plantable
   - FullyGrown
   - EmptyPlot
+  - UI
   layers:
   - Default
   - TransparentFX

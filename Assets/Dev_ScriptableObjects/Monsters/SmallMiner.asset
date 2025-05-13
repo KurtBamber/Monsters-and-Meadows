@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5bd6dd4a5a37358408c7942f60c711de, type: 3}
-  m_Name: House
+  m_Script: {fileID: 11500000, guid: f76d60cac5b00754d87c260ec27fda69, type: 3}
+  m_Name: SmallMiner
   m_EditorClassIdentifier: 
-  buildingPrefab: {fileID: 1545362219304170937, guid: 0d510e847fb3bfd409c507b36b3f81b0, type: 3}
-  requiredWood: 0
-  requiredStone: 0
+  role: 1
+  speed: 5

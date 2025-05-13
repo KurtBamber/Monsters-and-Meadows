@@ -13,6 +13,8 @@ public class BuildingManager : MonoBehaviour
     private GameObject selectedPlot;
     public Buildings house;
     public Buildings storage;
+    public GameObject underConstructionPrefab;
+
 
     // Start is called before the first frame update
     void Start()
@@ -29,16 +31,60 @@ public class BuildingManager : MonoBehaviour
         buildMenu.SetActive(true);//enables the building menu
     }
 
+    public void CloseBuildMenu()
+    {
+        selectedPlot = null;
+        buildMenu.SetActive(false);
+    }
+
     public void Build(Buildings choice)
     {
+        if (!GetAvailableBuilder())
+        {
+            return;
+        }
+
         if (ResourceManager.resourceManager.totalWood >= choice.requiredWood && ResourceManager.resourceManager.totalStone >= choice.requiredStone)//checks the resource manager against the scriptable object to see if they have enough materials
         {
             ResourceManager.resourceManager.totalWood -= choice.requiredWood;//deducts the used resource
             ResourceManager.resourceManager.totalStone -= choice.requiredStone;
             ResourceManager.resourceManager.UpdateUI();
 
-            Instantiate(choice.buildingPrefab, selectedPlotPosition, selectedPlotRotation);//spawns the chosen building at the plots location and rotation
-            buildMenu.SetActive(false);//disables the building menu
+            GameObject underConstruction = Instantiate(underConstructionPrefab, selectedPlotPosition, selectedPlotRotation);//spawns the chosen building at the plots location and rotation
+            AssignBuilder(choice, underConstruction);
+            Destroy(selectedPlot);
+            CloseBuildMenu();
+        }
+    }
+
+    public bool GetAvailableBuilder()
+    {
+        MonsterAI[] monsters = FindObjectsOfType<MonsterAI>();
+        foreach (MonsterAI monster in monsters)
+        {
+            if (monster.canBuild && (monster.currentState == monsterState.idle || monster.currentState == monsterState.wandering))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void AssignBuilder(Buildings building, GameObject underConstruction)
+    {
+        MonsterAI[] monsters = FindObjectsOfType<MonsterAI>();
+        foreach (MonsterAI monster in monsters)
+        {
+            if (monster.canBuild &&
+                (monster.currentState == monsterState.idle || monster.currentState == monsterState.wandering))
+            {
+                BuildingBehaviour builder = monster.GetComponent<BuildingBehaviour>();
+                if (builder != null)
+                {
+                    builder.StartBuilding(underConstruction, building.buildingPrefab);
+                    break;
+                }
+            }
         }
     }
 }
