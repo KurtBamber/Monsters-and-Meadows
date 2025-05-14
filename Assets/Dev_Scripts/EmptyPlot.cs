@@ -7,6 +7,7 @@ public class EmptyPlot : MonoBehaviour
 {
     private bool inRange = false;
     BuildingManager buildingManager;
+    public LayerMask plotLayer;
 
     private void Start()
     {
@@ -25,7 +26,7 @@ public class EmptyPlot : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit))
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, plotLayer))
             {
                 if (hit.collider.CompareTag("EmptyPlot") && hit.collider.gameObject == gameObject)
                 {

@@ -17,18 +17,20 @@ public class InspectorManager : MonoBehaviour
     public Image radialTimer;
     public Material outlineMaterial;
     public Button nextButton;
-    private int currentMonster = 0;
+    public int currentMonster = 0;
     public Canvas hotbar;
     public Image energyBar;
-
+    private float nextClickCooldown = 0.2f;
+    private float lastClickTime = -1f;
 
     public void Start()
     {
+        nextButton.onClick.RemoveAllListeners();
+        nextButton.onClick.AddListener(ShowNextMonster);
         inspectorUI = this.gameObject.transform.GetChild(0).gameObject;
         inspectorUI.SetActive(false);
 
         isInspectorOpen = false;
-        nextButton.onClick.AddListener(ShowNextMonster);
     }
 
     public void Update()
@@ -84,8 +86,12 @@ public class InspectorManager : MonoBehaviour
 
     public void ShowNextMonster()
     {
-        Debug.Log("Next button clicked!");
+        if (Time.time - lastClickTime < nextClickCooldown)
+            return;
+
+        lastClickTime = Time.time;
         currentMonster++;
+
         if (currentMonster >= MM.selectedMonster.Count)
         {
             currentMonster = 0;

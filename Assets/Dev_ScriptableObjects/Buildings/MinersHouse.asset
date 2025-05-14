@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5bd6dd4a5a37358408c7942f60c711de, type: 3}
-  m_Name: House
+  m_Name: MinersHouse
   m_EditorClassIdentifier: 
-  buildingPrefab: {fileID: 1545362219304170937, guid: 0d510e847fb3bfd409c507b36b3f81b0, type: 3}
+  buildingPrefab: {fileID: 6526017171188328576, guid: fcc700d946e305443852f0a8677d1a57, type: 3}
   requiredWood: 0
   requiredStone: 0

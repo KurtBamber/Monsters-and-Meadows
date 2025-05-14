@@ -77,13 +77,15 @@ public class MovementManager : MonoBehaviour
         );
 
         List<MonsterAI> newSelection = new List<MonsterAI>();
+        int monsterLayer = LayerMask.GetMask("Monster");
+        Collider[] hits = Physics.OverlapSphere(transform.position, 1000f, monsterLayer);
 
-        foreach (GameObject monster in GameObject.FindGameObjectsWithTag("Monster"))//goes through all the monsters in the scene
+        foreach (var hit in hits)//goes through all the monsters in the scene
         {
-            Vector3 screenPos = Camera.main.WorldToScreenPoint(monster.transform.position);//converts the monsters world pos to screen space
+            Vector3 screenPos = Camera.main.WorldToScreenPoint(hit.transform.position);//converts the monsters world pos to screen space
             if (selectionRect.Contains(screenPos))//checks if the monsters are within the selection area
             {
-                newSelection.Add(monster.GetComponent<MonsterAI>());//adds the monster to the list
+                newSelection.Add(hit.GetComponent<MonsterAI>());//adds the monster to the list
             }
         }
 
@@ -94,6 +96,7 @@ public class MovementManager : MonoBehaviour
                 monsters.GetComponentInChildren<Renderer>().material = null;
             }
             selectedMonster = newSelection;
+            FindObjectOfType<InspectorManager>().currentMonster = 0;
         }
     }
 

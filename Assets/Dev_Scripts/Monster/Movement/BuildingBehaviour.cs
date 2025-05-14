@@ -48,7 +48,7 @@ public class BuildingBehaviour : MonoBehaviour
 
         float actualBuildTime = buildTime / buildSpeed;
         yield return new WaitForSeconds(actualBuildTime);
-        GameObject builtObject = Instantiate(buildingPrefab, underConstruction.transform.position, underConstruction.transform.rotation);
+        GameObject builtObject = Instantiate(buildingPrefab, new Vector3(underConstruction.transform.position.x, 15, underConstruction.transform.position.z), underConstruction.transform.rotation);
         House house = builtObject.GetComponent<House>();
         FindObjectOfType<HouseManager>().AddHouse(house);
         Destroy(underConstruction);
