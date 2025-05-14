@@ -711,6 +711,18 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: e8231f67832e4bc44a3636b7924af4db, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: e8231f67832e4bc44a3636b7924af4db, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: e8231f67832e4bc44a3636b7924af4db, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2504516506940294678, guid: 86d186ae36219854082e5783098513aa, type: 3}
     - target: {fileID: 919132149155446097, guid: e8231f67832e4bc44a3636b7924af4db, type: 3}
       propertyPath: m_Name
       value: Small Miner Monster
