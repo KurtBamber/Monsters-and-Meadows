@@ -19,6 +19,7 @@ public class InspectorManager : MonoBehaviour
     public Button nextButton;
     private int currentMonster = 0;
     public Canvas hotbar;
+    public Image energyBar;
 
 
     public void Start()
@@ -55,6 +56,7 @@ public class InspectorManager : MonoBehaviour
     {
         selectedMonster = MM.selectedMonster[currentMonster].gameObject;
         monsterActivity.text = MM.selectedMonster[currentMonster].GetComponent<MonsterAI>().stateText.text;
+        EnergySystem energy = selectedMonster.GetComponent<EnergySystem>();
         foreach (var monsters in MM.selectedMonster)
         {
             monsters.GetComponentInChildren<Renderer>().material = outlineMaterial;
@@ -76,6 +78,7 @@ public class InspectorManager : MonoBehaviour
 
         monsterTime = MM.selectedMonster[currentMonster].GetComponent<MonsterAI>().currentTime;
         radialTimer.fillAmount = monsterTime / MM.selectedMonster[currentMonster].intervalBetweenStates;
+        energyBar.fillAmount = Mathf.Clamp01(energy.currentEnergy / energy.maxEnergy);
         FindObjectOfType<CameraManager>().selectedMonster = MM.selectedMonster[currentMonster].transform;
     }
 

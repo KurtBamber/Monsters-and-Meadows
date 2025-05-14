@@ -13,6 +13,7 @@ public class MovementManager : MonoBehaviour
     public RectTransform selectionBox;
     public Canvas canvas;
     public bool isMonsterClicked;
+    public LayerMask groundLayer;
 
 
     // Update is called once per frame
@@ -114,7 +115,7 @@ public class MovementManager : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);//sends a ray from the main camera to the point that you clicked
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit))//checks if the ray collided with anything
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, groundLayer))//checks if the ray collided with anything
         {
             if (hit.collider.CompareTag("Monster"))//checks if the player clicked on a monster
             {
