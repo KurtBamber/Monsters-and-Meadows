@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Windows.WebCam;
 
 public class SettingsManager : MonoBehaviour
@@ -84,5 +85,10 @@ public class SettingsManager : MonoBehaviour
             Movement.useWASD = true;
             isWASD = true;
         }
+    }
+
+    public void Quit()
+    {
+        SceneManager.LoadScene("Start Scene");
     }
 }
