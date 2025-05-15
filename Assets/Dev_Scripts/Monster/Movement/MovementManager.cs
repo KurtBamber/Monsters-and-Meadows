@@ -97,6 +97,8 @@ public class MovementManager : MonoBehaviour
             }
             selectedMonster = newSelection;
             FindObjectOfType<InspectorManager>().currentMonster = 0;
+            FindObjectOfType<DialogueManager>().waitingForSelection = false;
+            FindObjectOfType<HintManager>().HideSelectHint();
         }
     }
 

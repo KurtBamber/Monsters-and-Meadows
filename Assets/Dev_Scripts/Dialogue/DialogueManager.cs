@@ -20,7 +20,9 @@ public class DialogueManager : MonoBehaviour
     public Button button;
     private bool waitingForZoom = false;
     public bool waitingForHarvest = false;
+    public bool waitingForSelection = false;
     public Seed firstSeed;
+    public GameObject nextButton;
 
     private void Start()
     {
@@ -30,6 +32,15 @@ public class DialogueManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (waitingForZoom || waitingForHarvest || waitingForSelection)
+        {
+            nextButton.SetActive(false);
+        }
+        else
+        {
+            nextButton.SetActive(true);
+        }
+
         if (Input.GetAxis("Mouse ScrollWheel") < 0f && waitingForZoom)
         {
             waitingForZoom = false;
@@ -47,10 +58,11 @@ public class DialogueManager : MonoBehaviour
     {
         if (dialogueBox.activeSelf)
         {
-            if (waitingForZoom)
+            if (waitingForZoom || waitingForHarvest || waitingForSelection)
             {
                 return;
             }
+
             DisplayNextSentence();
         }
     }
@@ -127,6 +139,16 @@ public class DialogueManager : MonoBehaviour
             FindObjectOfType<HintManager>().ShowInteractHint();
             return;
         }
+
+        if (currentSentence.Contains("[SELECT]") && !waitingForSelection)
+        {
+            waitingForSelection = true;
+            currentSentence = currentSentence.Replace("[SELECT]", "");
+            dialogueText.text = currentSentence;
+            FindObjectOfType<HintManager>().ShowSelectHint();
+            return;
+        }
+
         typingCoroutine = StartCoroutine(TypeSentence(currentSentence));
     }
 

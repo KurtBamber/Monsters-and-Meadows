@@ -17,6 +17,7 @@ public class HintManager : MonoBehaviour
     private bool hasMoved = false;
     private bool hasScrolled = false;
     private bool hasPlanted = false;
+    private bool hasSelected = false;
 
     void Start()
     {
@@ -76,6 +77,17 @@ public class HintManager : MonoBehaviour
         }
     }
 
+    public void ShowSelectHint()
+    {
+        if (!hasSelected)
+        {
+            hintText.text = "Drag over a monster to select them.";
+            mouseHintImage.enabled = true;
+            mouseHintImage.sprite = leftClickSprite;
+            StartCoroutine (FadeIn());
+        }
+    }
+
     public void HideScrollHint()
     {
         hasScrolled = true;
@@ -85,6 +97,12 @@ public class HintManager : MonoBehaviour
     public void HidePlantHint()
     {
         hasPlanted = true;
+        StartCoroutine(FadeOut());
+    }
+
+    public void HideSelectHint()
+    {
+        hasSelected = true;
         StartCoroutine(FadeOut());
     }
 
