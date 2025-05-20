@@ -12,6 +12,7 @@ public class HintManager : MonoBehaviour
     public Sprite leftClickSprite;
     public Sprite rightClickSprite;
     public Sprite scrollSprite;
+    public GameObject dragHint;
     public CanvasGroup canvasGroup;
     public float fadeDuration = 0.5f;
     private bool hasMoved = false;
@@ -82,9 +83,8 @@ public class HintManager : MonoBehaviour
         if (!hasSelected)
         {
             hintText.text = "Drag over a monster to select them.";
-            mouseHintImage.enabled = true;
-            mouseHintImage.sprite = leftClickSprite;
-            StartCoroutine (FadeIn());
+            mouseHintImage.enabled = false;
+            dragHint.SetActive(true);
         }
     }
 
@@ -97,12 +97,13 @@ public class HintManager : MonoBehaviour
     public void HidePlantHint()
     {
         hasPlanted = true;
-        StartCoroutine(FadeOut());
+        FadeOut();
     }
 
     public void HideSelectHint()
     {
         hasSelected = true;
+        dragHint.SetActive(false);
         StartCoroutine(FadeOut());
     }
 

@@ -21,3 +21,6 @@ MonoBehaviour:
     monster.[SELECT]
   - Each monster has a speciality, lets take a look at it's stats. Press 'I' with
     a monster selected to open the inspector.
+  - Looks like this is a builder, I'm sure there are a few resources left over lets
+    try building a house for our new monster!
+  - Click on one of the areas of rubble and select a house to build.

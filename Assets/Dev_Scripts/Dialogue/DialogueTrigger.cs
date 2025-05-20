@@ -5,7 +5,7 @@ using UnityEngine;
 public class DialogueTrigger : MonoBehaviour
 {
     public Dialogue dialogue;
-    public enum TriggerType { OnClick, OnTriggerEnterOptional, OnTriggerEnterCompulsory, OnStart, OnPulledOut };
+    public enum TriggerType { OnClick, OnTriggerEnterOptional, OnTriggerEnterCompulsory, OnStart, OnPulledOut, OnHouseBuilt };
     public TriggerType triggerType;
     public bool hasTriggered;
     private DialogueManager dialogueManager;
@@ -43,9 +43,23 @@ public class DialogueTrigger : MonoBehaviour
 
     public void OnPulledOut()
     {
-        TriggerDialogue();
-        hasTriggered = true;
-        Destroy(gameObject);
+        if (triggerType == TriggerType.OnPulledOut)
+        {
+            TriggerDialogue();
+            hasTriggered = true;
+            Destroy(gameObject);
+        }
+    }
+
+    public void OnHouseBuilt()
+    {
+        if (triggerType == TriggerType.OnHouseBuilt)
+        {
+            FindObjectOfType<Enemy_Spawner>().spawnEnemies = true;
+            TriggerDialogue();
+            hasTriggered = true;
+            Destroy(gameObject);
+        }
     }
 
     public void TriggerDialogue()

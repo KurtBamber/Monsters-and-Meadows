@@ -15,10 +15,12 @@ public class ResourceManager : MonoBehaviour
     void Start()
     {
         resourceManager = this;
+        UpdateUI();
     }
 
     private void Update()
     {
+        /*
         for (int i = 0; i < totalWood; i++)
         {
             woodLogs[i].SetActive(true);
@@ -28,6 +30,7 @@ public class ResourceManager : MonoBehaviour
         {
             Stones[i].SetActive(true);
         }
+        */
     }
 
     public void AddStone(int amount)
@@ -40,6 +43,24 @@ public class ResourceManager : MonoBehaviour
     {
         totalWood += amount;
         UpdateUI();
+    }
+
+    public void RemoveStone(int amount)
+    {
+        if (totalStone >= amount)
+        {
+            totalStone -= amount;
+            UpdateUI();
+        }
+    }
+
+    public void RemoveWood(int amount)
+    {
+        if (totalWood >= amount)
+        {
+            totalWood -= amount;
+            UpdateUI();
+        }
     }
 
     public void UpdateUI()

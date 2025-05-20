@@ -14,6 +14,7 @@ public class MovementManager : MonoBehaviour
     public Canvas canvas;
     public bool isMonsterClicked;
     public LayerMask groundLayer;
+    private bool firstSelection = true;
 
 
     // Update is called once per frame
@@ -97,8 +98,14 @@ public class MovementManager : MonoBehaviour
             }
             selectedMonster = newSelection;
             FindObjectOfType<InspectorManager>().currentMonster = 0;
-            FindObjectOfType<DialogueManager>().waitingForSelection = false;
-            FindObjectOfType<HintManager>().HideSelectHint();
+            if (firstSelection)
+            {
+                firstSelection = false;
+                FindObjectOfType<DialogueManager>().waitingForSelection = false;
+                FindObjectOfType<DialogueManager>().DisplayNextSentence();
+                FindObjectOfType<HintManager>().HideSelectHint();
+            }
+
         }
     }
 

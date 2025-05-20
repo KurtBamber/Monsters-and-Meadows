@@ -75,7 +75,6 @@ public class SeedGrowth : MonoBehaviour
                 {
                     firstHarvest = false;
                     FindObjectOfType<DialogueManager>().waitingForHarvest = false;
-                    FindObjectOfType<HintManager>().PlayerInteracted();
                     FindObjectOfType<DialogueManager>().DisplayNextSentence();
                 }
                 Destroy(gameObject);//destroys the seed

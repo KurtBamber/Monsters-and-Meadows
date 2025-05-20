@@ -15,5 +15,6 @@ MonoBehaviour:
   speakerName: ???
   speakerImage: {fileID: 21300000, guid: f3032b5b957d0f8418848a42abac8115, type: 3}
   sentences:
-  - Hello?------Is somone there...?
-  - Please help me...                                                        Im stuck...
+  - Hello?------Is someone there...?
+  - Please help me...                                                        I'm
+    stuck...

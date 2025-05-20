@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 550725957238887244}
   - component: {fileID: 7894502539994887000}
   - component: {fileID: 4634045039290620915}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,6 +177,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentState: 0
   State: 0
+  isScared: 0
   whichBuildingInt: 0
   Buildings:
   - {fileID: 0}

@@ -16,6 +16,7 @@ public class Enemy_Manager : MonoBehaviour
     [Header("States")]
     public enemyState currentState;
     public int State;
+    public bool isScared = false;
 
     [Header("Target")]
     public int whichBuildingInt;
@@ -37,8 +38,8 @@ public class Enemy_Manager : MonoBehaviour
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        Buildings = GameObject.FindGameObjectsWithTag("EmptyPlot");
-        Spawn = GameObject.Find("Enemy Spawn");
+        Buildings = GameObject.FindGameObjectsWithTag("Building");
+        Spawn = GameObject.Find("Spawn");
 
         whichBuildingInt = Random.Range(0, Buildings.Length);
 
@@ -64,7 +65,10 @@ public class Enemy_Manager : MonoBehaviour
     }
     public void ToPlot(Vector3 destination)
     {
-        agent.SetDestination(destination);
+        if (!agent.hasPath)
+        {
+            agent.SetDestination(destination);
+        }
 
         distanceToTarget = Vector3.Distance(agent.transform.position, destination);
         if (distanceToTarget < reachDistance)
@@ -76,9 +80,18 @@ public class Enemy_Manager : MonoBehaviour
 
     public void Stealing()
     {
-        if(currentTime >= stealingTime)
+        if (currentTime >= stealingTime && !FindObjectOfType<Enemy_Spawner>().isTutorial)
         {
             stolenResources = Random.Range(minResourcesStolen, maxResourcesStolen);
+            if (Random.value > 0.5f)
+            {
+                ResourceManager.resourceManager.RemoveStone(stolenResources);
+            }
+            else
+            {
+                ResourceManager.resourceManager.RemoveWood(stolenResources);
+            }
+
             State = 3;
         }
         else
@@ -87,17 +100,27 @@ public class Enemy_Manager : MonoBehaviour
         }
     }
 
+    public void Scare()
+    {
+        if (isScared)
+        {
+            return;
+        }
+        currentTime = 0;
+        State = 3;
+        isScared = true;
+    }
+
     public void Leave()
     {
-        agent.isStopped = false;
         agent.SetDestination(Spawn.transform.position);
+        agent.isStopped = false;
 
-
-        if (agent.remainingDistance <= 10)
+        if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
         {
             Destroy(this.gameObject);
         }
-        
     }
+
 
 }

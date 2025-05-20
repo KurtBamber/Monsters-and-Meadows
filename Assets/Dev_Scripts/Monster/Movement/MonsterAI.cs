@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
@@ -17,6 +17,7 @@ public class MonsterAI : MonoBehaviour
     private MiningBehaviour miningBehaviour;
     private BuildingBehaviour buildingBehaviour;
     private ChoppingBehaviour choppingBehaviour;
+
 
     [Header("Abilites")]
     public bool canMine = false;
@@ -195,6 +196,34 @@ public class MonsterAI : MonoBehaviour
         ChangeState(monsterState.following);//makes the monsters state following
         StartCoroutine(CheckIfArrived(resourceState));//checks when the monsters arrived
     }
+
+    public bool CanScare()
+    {
+        return !isFollowingCommand && !energySystem.isLowEnegry && currentState != monsterState.building;
+    }
+
+    public void ScareTarget(Enemy_Manager target, float energyCost)
+    {
+        isFollowingCommand = true;
+        energySystem.DrainEnergy(energyCost);
+        agent.SetDestination(target.transform.position);
+        ChangeState(monsterState.following);
+
+        StartCoroutine(ScareRoutine(target));
+    }
+
+    private IEnumerator ScareRoutine(Enemy_Manager target)
+    {
+        while (agent.pathPending || agent.remainingDistance > agent.stoppingDistance)
+        {
+            yield return null;
+        }
+
+        target.Scare();
+        isFollowingCommand = false;
+        ChangeState(monsterState.wandering);
+    }
+
 
     private IEnumerator CheckIfArrived(monsterState resourceState)
     {
