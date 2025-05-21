@@ -576,6 +576,7 @@ MonoBehaviour:
   isFollowingCommand: 0
   stateText: {fileID: 4019485451522829692}
   radialTimer: {fileID: 3715490055612106834}
+  outliner: {fileID: 2100000, guid: 53a21de6bd1601f449b48900b6feef4c, type: 2}
 --- !u!114 &7046172335985484955
 MonoBehaviour:
   m_ObjectHideFlags: 0

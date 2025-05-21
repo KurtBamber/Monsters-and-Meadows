@@ -37,6 +37,7 @@ public class MonsterAI : MonoBehaviour
     [Header("UI")]
     public TextMeshProUGUI stateText;
     public Image radialTimer;
+    public Material outliner;
 
     private void Start()
     {
@@ -206,6 +207,7 @@ public class MonsterAI : MonoBehaviour
     {
         isFollowingCommand = true;
         energySystem.DrainEnergy(energyCost);
+        target.GetComponentInChildren<Renderer>().material = outliner;
         agent.SetDestination(target.transform.position);
         ChangeState(monsterState.following);
 
@@ -221,6 +223,7 @@ public class MonsterAI : MonoBehaviour
 
         target.Scare();
         isFollowingCommand = false;
+        target.GetComponentInChildren<Renderer>().material = null;
         ChangeState(monsterState.wandering);
     }
 
