@@ -16,3 +16,4 @@ MonoBehaviour:
   speakerImage: {fileID: 21300000, guid: bfa37d2d96fffb243b5986a5f2a46c87, type: 3}
   sentences:
   - Oh no! The humans must of seen us trying to build and are trying to attack.
+  - Click on the humans to scare them away. This time we won't lose!

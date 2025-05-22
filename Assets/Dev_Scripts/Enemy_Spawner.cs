@@ -9,6 +9,7 @@ public class Enemy_Spawner : MonoBehaviour
     public GameObject enemyPrefab;
     public bool spawnEnemies, enemiesHaveSpawned, isTutorial;
     public LayerMask enemyLayer;
+    public bool firstRaid = true;
 
     public void Update()
     {
@@ -85,6 +86,10 @@ public class Enemy_Spawner : MonoBehaviour
         }
         else
         {
+            if (firstRaid)
+            {
+                FindObjectOfType<DialogueTrigger>().OnRaidComplete();
+            }
             yield return null;
         }
     }
