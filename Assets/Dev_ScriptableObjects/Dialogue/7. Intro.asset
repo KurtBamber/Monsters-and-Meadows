@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83b2030f909db8946936a66575b43798, type: 3}
+  m_Name: 7. Intro
+  m_EditorClassIdentifier: 
+  speakerName: Ivan-tory
+  speakerImage: {fileID: 21300000, guid: bfa37d2d96fffb243b5986a5f2a46c87, type: 3}
+  sentences:
+  - Phew. That was close! It looks like our little builder friend is all tried out.
+  - Everytime a monster performs an action they use energy if their energy gets too
+    low they must head to a house to recover.
+  - Monsters are happy to sleep in any type of house however, if you build their
+    favourite house they will recover much faster!
+  - Aha. It seems that one of the fleeing humans dropped a seed for a monster. Pick
+    it up and give it a plant.
+  - If you click on a resource(trees or rocks) with the correct monster type selected
+    you will begin to gather that resource.[END]

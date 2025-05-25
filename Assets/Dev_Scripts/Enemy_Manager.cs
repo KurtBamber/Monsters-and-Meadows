@@ -34,12 +34,17 @@ public class Enemy_Manager : MonoBehaviour
     [Header("Escaping")]
     public GameObject Spawn;
 
+    [Header("Seeds")]
+    public GameObject[] seeds;
+    public float seedDropChance = 0.2f;
+    private bool firstSeed = true;
+
 
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         Buildings = GameObject.FindGameObjectsWithTag("Building");
-        Spawn = GameObject.Find("Spawn");
+        Spawn = GameObject.Find("EnemySpawn");
 
         whichBuildingInt = Random.Range(0, Buildings.Length);
 
@@ -109,6 +114,21 @@ public class Enemy_Manager : MonoBehaviour
         currentTime = 0;
         State = 3;
         isScared = true;
+        DropSeed();
+        FindObjectOfType<Enemy_Spawner>().CheckRaidCompletion();
+    }
+
+    private void DropSeed()
+    {
+        if (firstSeed)
+        {
+            Instantiate(seeds[0], transform.position, Quaternion.Euler(-90, 0, 0));
+            firstSeed = false;
+        }
+        else if (Random.value < seedDropChance && !FindObjectOfType<Enemy_Spawner>().isTutorial)
+        {
+            Instantiate(seeds[Random.Range(0, seeds.Length)], transform.position, Quaternion.Euler(-90, 0, 0));
+        }
     }
 
     public void Leave()
@@ -121,6 +141,4 @@ public class Enemy_Manager : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
-
-
 }

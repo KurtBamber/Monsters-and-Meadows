@@ -76,6 +76,23 @@ public class Enemy_Spawner : MonoBehaviour
         return nearest;
     }
 
+    public void CheckRaidCompletion()
+    {
+        if (!firstRaid) return;
+
+        Enemy_Manager[] allEnemies = FindObjectsOfType<Enemy_Manager>();
+        foreach (var enemy in allEnemies)
+        {
+            if (!enemy.isScared)
+            {
+                return;
+            }
+        }
+
+        firstRaid = false;
+        FindObjectOfType<DialogueTrigger>().OnRaidComplete();
+    }
+
     private IEnumerator RaidWait()
     {
         if (!isTutorial)
@@ -86,10 +103,6 @@ public class Enemy_Spawner : MonoBehaviour
         }
         else
         {
-            if (firstRaid)
-            {
-                FindObjectOfType<DialogueTrigger>().OnRaidComplete();
-            }
             yield return null;
         }
     }

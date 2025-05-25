@@ -195,3 +195,11 @@ MonoBehaviour:
   maxResourcesStolen: 0
   minResourcesStolen: 30
   Spawn: {fileID: 0}
+  seeds:
+  - {fileID: 5874558148474796948, guid: c9a270d27e6b3694eb9d32149968151f, type: 3}
+  - {fileID: 6456947644788673024, guid: 2efc13408bede194d953c3927c7030ce, type: 3}
+  - {fileID: 4900691802303443225, guid: f508b297cadd1dd46a707fa348a5a164, type: 3}
+  - {fileID: 7809421381908457789, guid: 24e0884227633ae4cb6d149dae702a50, type: 3}
+  - {fileID: 1888051077307413073, guid: 1caabeb752054f148b3c277d605c566e, type: 3}
+  - {fileID: 5831893218533398468, guid: a3b080145bfbc5040b5efac89897d200, type: 3}
+  seedDropChance: 0.2

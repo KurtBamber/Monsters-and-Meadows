@@ -59,7 +59,7 @@ public class MovementManager : MonoBehaviour
         {
             foreach (var monsters in selectedMonster)
             {
-                monsters.GetComponentInChildren<Renderer>().material = null;
+                monsters.GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
             }
             selectedMonster.Clear();
         }
@@ -94,7 +94,7 @@ public class MovementManager : MonoBehaviour
         {
             foreach (var monsters in selectedMonster)
             {
-                monsters.GetComponentInChildren<Renderer>().material = null;
+                monsters.GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
             }
             selectedMonster = newSelection;
             FindObjectOfType<InspectorManager>().currentMonster = 0;

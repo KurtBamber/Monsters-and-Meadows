@@ -35,7 +35,7 @@ public class InspectorManager : MonoBehaviour
 
     public void Update()
     {
-        if(MM.selectedMonster.Count > 0)
+        if (MM.selectedMonster.Count > 0)
         {
             UpdateMonsterActivity();
         }
@@ -48,7 +48,7 @@ public class InspectorManager : MonoBehaviour
         {
             OpenPanel();
         }
-        else if(Input.GetKeyDown(KeyCode.I) && isInspectorOpen)
+        else if (Input.GetKeyDown(KeyCode.I) && isInspectorOpen)
         {
             ClosePanel();
         }
@@ -61,7 +61,7 @@ public class InspectorManager : MonoBehaviour
         EnergySystem energy = selectedMonster.GetComponent<EnergySystem>();
         foreach (var monsters in MM.selectedMonster)
         {
-            monsters.GetComponentInChildren<Renderer>().material = outlineMaterial;
+            monsters.GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
         }
 
         if (MM.selectedMonster[currentMonster].GetComponent<MonsterAI>().canChop)

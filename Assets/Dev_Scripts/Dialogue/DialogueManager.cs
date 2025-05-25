@@ -149,6 +149,12 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
+        if (currentSentence.Contains("[END]"))
+        {
+            currentSentence = currentSentence.Replace("[END]", "");
+            FindObjectOfType<Enemy_Spawner>().isTutorial = false;
+        }
+
         typingCoroutine = StartCoroutine(TypeSentence(currentSentence));
     }
 

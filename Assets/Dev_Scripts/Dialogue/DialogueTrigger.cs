@@ -66,7 +66,19 @@ public class DialogueTrigger : MonoBehaviour
     {
         if (triggerType == TriggerType.OnRaidComplete)
         {
-            if (FindObjectOfType<Enemy_Manager>() == null)
+            Enemy_Manager[] allEnemies = FindObjectsOfType<Enemy_Manager>();
+            bool allScared = true;
+
+            foreach (Enemy_Manager enemy in allEnemies)
+            {
+                if (!enemy.isScared)
+                {
+                    allScared = false;
+                    break;
+                }
+            }
+
+            if (allScared)
             {
                 FindObjectOfType<Enemy_Spawner>().firstRaid = false;
                 TriggerDialogue();

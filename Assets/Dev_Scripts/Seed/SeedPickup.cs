@@ -6,6 +6,12 @@ public class SeedPickup : MonoBehaviour
 {
     public Seed seedData;
 
+    private void Update()
+    {
+        transform.position += Vector3.up * Mathf.Sin(Time.time * 2) * 0.001f;
+        transform.Rotate(Vector3.back * 50 * Time.deltaTime);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))//checks if the thing colliding with it is the player

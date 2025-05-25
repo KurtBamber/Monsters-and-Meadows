@@ -208,23 +208,30 @@ public class MonsterAI : MonoBehaviour
         isFollowingCommand = true;
         energySystem.DrainEnergy(energyCost);
         target.GetComponentInChildren<Renderer>().material = outliner;
-        agent.SetDestination(target.transform.position);
         ChangeState(monsterState.following);
-
         StartCoroutine(ScareRoutine(target));
     }
 
     private IEnumerator ScareRoutine(Enemy_Manager target)
     {
-        while (agent.pathPending || agent.remainingDistance > agent.stoppingDistance)
-        {
-            yield return null;
-        }
+        float repathInterval = 0.5f;
 
-        target.Scare();
-        isFollowingCommand = false;
-        target.GetComponentInChildren<Renderer>().material = null;
-        ChangeState(monsterState.wandering);
+        while (!target.isScared)
+        {
+            if (target == null) break;
+
+            agent.SetDestination(target.transform.position);  // Recalculate path
+            yield return new WaitForSeconds(repathInterval); // Wait before next repath
+
+            if (Vector3.Distance(transform.position, target.transform.position) <= agent.stoppingDistance + 5.5f)
+            {
+                target.Scare();
+                target.GetComponentInChildren<Renderer>().material = null;
+                isFollowingCommand = false;
+                ChangeState(monsterState.wandering);
+                yield break;
+            }
+        }
     }
 
 
