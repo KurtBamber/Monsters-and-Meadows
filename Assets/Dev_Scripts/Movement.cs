@@ -27,8 +27,6 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        playerAnimator.SetBool("isRunning", isRunning);
-
         if (useWASD)
         {
             if (agent.enabled)//checks if the navagent is enabled
@@ -72,6 +70,15 @@ public class Movement : MonoBehaviour
                 isRunning = false;
             }
         }
+
+        if(agent.isStopped == false)
+        {
+            playerAnimator.SetBool("isRunning", true);
+        }
+        else
+        {
+            playerAnimator.SetBool("isRunning", false);
+        }
     }
 
     private void FixedUpdate()
@@ -101,6 +108,8 @@ public class Movement : MonoBehaviour
                 }
             }
         }
+
+
     }
 
     private void MoveTo()

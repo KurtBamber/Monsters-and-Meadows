@@ -14,7 +14,6 @@ public class Enemy_Manager : MonoBehaviour
     
 
     [Header("States")]
-    public enemyState currentState;
     public int State;
     public bool isScared = false;
 
@@ -38,6 +37,9 @@ public class Enemy_Manager : MonoBehaviour
     public GameObject[] seeds;
     public float seedDropChance = 0.2f;
     private bool firstSeed = true;
+
+    [Header("Animations")]
+    public Animator enemyAnimator;
 
 
     private void Start()
@@ -66,6 +68,15 @@ public class Enemy_Manager : MonoBehaviour
         if (State == 3)
         {
             Leave();
+        }
+
+        if (agent.isStopped == true)
+        {
+            enemyAnimator.SetBool("isRunning", false);
+        }
+        else
+        {
+            enemyAnimator.SetBool("isRunning", true);
         }
     }
     public void ToPlot(Vector3 destination)
