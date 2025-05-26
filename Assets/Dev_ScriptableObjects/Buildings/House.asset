@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: House
   m_EditorClassIdentifier: 
   buildingPrefab: {fileID: 4979673494913826958, guid: cb1456a7c05ad35488e5893349151ac5, type: 3}
-  requiredWood: 0
-  requiredStone: 0
+  requiredWood: 80
+  requiredStone: 80

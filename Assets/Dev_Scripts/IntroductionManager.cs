@@ -37,6 +37,7 @@ public class IntroductionManager : MonoBehaviour
     {
         if (isStarted == true)
         {
+            pullArrow.SetActive(true);
             StartCoroutine(StartPlayerSpawn());
         }
 
@@ -47,12 +48,10 @@ public class IntroductionManager : MonoBehaviour
         {
             if (hit.collider.CompareTag("PlayerModel"))
             {
-                pullArrow.SetActive(true);
                 hoveringOverModel = true;
             }
             else
             {
-                pullArrow.SetActive(false);
                 hoveringOverModel = false;
             }
         }
@@ -62,7 +61,10 @@ public class IntroductionManager : MonoBehaviour
     {
 
         yield return new WaitForSeconds(playerBoots);
-        playerModel1.transform.position = Vector3.Lerp(playerModel1.transform.position, new Vector3(-0.870000005f, 0.610000014f, 11.4899998f), Time.deltaTime);
+        if (playerModel1.transform.position.y < 0)
+        {
+            playerModel1.transform.position = Vector3.Lerp(playerModel1.transform.position, new Vector3(-0.870000005f, 0.610000014f, 11.4899998f), Time.deltaTime);
+        }
 
         if(hoveringOverModel == true && Input.GetMouseButton(0))
         {
@@ -71,11 +73,6 @@ public class IntroductionManager : MonoBehaviour
             Vector3 worldPos = mainCamera.ScreenToWorldPoint(mousePos) + Offset;
 
             playerModel1.transform.position = new Vector3(playerModel1.transform.position.x, worldPos.y, playerModel1.transform.position.z);
-
-        }
-        else if (hoveringOverModel == true && Input.GetMouseButtonUp(0))
-        {
-            playerModel1.transform.position = new Vector3(-0.870000005f, -0.419999987f, 11.4899998f);
         }
         
         currentMousePosition = Input.mousePosition;
@@ -86,6 +83,5 @@ public class IntroductionManager : MonoBehaviour
             colourUI.SetActive(false);
             nameUI.SetActive(true);
         }
-
     }
 }

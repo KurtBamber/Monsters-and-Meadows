@@ -4,6 +4,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using static MonsterType;
 
@@ -17,6 +18,7 @@ public class MonsterAI : MonoBehaviour
     private MiningBehaviour miningBehaviour;
     private BuildingBehaviour buildingBehaviour;
     private ChoppingBehaviour choppingBehaviour;
+    private Animator animator;
 
 
     [Header("Abilites")]
@@ -49,6 +51,7 @@ public class MonsterAI : MonoBehaviour
         miningBehaviour = GetComponent<MiningBehaviour>();
         choppingBehaviour = GetComponent<ChoppingBehaviour>();
         buildingBehaviour = GetComponent<BuildingBehaviour>();
+        animator = GetComponentInChildren<Animator>();
 
         currentTime = 0f;
     }
@@ -71,11 +74,20 @@ public class MonsterAI : MonoBehaviour
 
     private void Update()
     {
+        if (agent.velocity.magnitude > 1)
+        {
+            animator.SetBool("isMoving", true);
+        }
+        else if (agent.velocity.magnitude < 1)
+        {
+            animator.SetBool("isMoving", false);
+        }
         if (energySystem.isLowEnegry && !isFollowingCommand)
         {
             Recharge();
             return;
         }
+
 
         if (isFollowingCommand)//only allows the rest of the code to run if it is not already following a command
         {
@@ -161,7 +173,7 @@ public class MonsterAI : MonoBehaviour
 
     public void MoveTo(Vector3 destination)
     {
-        if (buildingBehaviour == null || !buildingBehaviour.isBusy)
+        if ((buildingBehaviour == null || !buildingBehaviour.isBusy) && !FindObjectOfType<BuildingManager>().buildMenu.activeSelf)
         {
             isFollowingCommand = true;
             agent.SetDestination(destination);//moves the agent to where clicked
@@ -207,14 +219,16 @@ public class MonsterAI : MonoBehaviour
     {
         isFollowingCommand = true;
         energySystem.DrainEnergy(energyCost);
-        target.GetComponentInChildren<Renderer>().material = outliner;
+        target.GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
         ChangeState(monsterState.following);
         StartCoroutine(ScareRoutine(target));
     }
 
     private IEnumerator ScareRoutine(Enemy_Manager target)
     {
-        float repathInterval = 0.5f;
+        float repathInterval = 1f;
+        agent.acceleration = 999;
+        agent.angularSpeed = 999;
 
         while (!target.isScared)
         {
@@ -226,12 +240,14 @@ public class MonsterAI : MonoBehaviour
             if (Vector3.Distance(transform.position, target.transform.position) <= agent.stoppingDistance + 5.5f)
             {
                 target.Scare();
-                target.GetComponentInChildren<Renderer>().material = null;
+                target.GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
                 isFollowingCommand = false;
                 ChangeState(monsterState.wandering);
                 yield break;
             }
         }
+        agent.acceleration = 8;
+        agent.angularSpeed = 120;
     }
 
 
@@ -274,7 +290,7 @@ public class MonsterAI : MonoBehaviour
     }
 
     private IEnumerator EnterHouse(House house)
-    { 
+    {
         while (agent.pathPending || agent.remainingDistance > agent.stoppingDistance)
         {
             yield return null;

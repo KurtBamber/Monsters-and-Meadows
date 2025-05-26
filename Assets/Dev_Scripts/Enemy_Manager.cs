@@ -34,9 +34,9 @@ public class Enemy_Manager : MonoBehaviour
     public GameObject Spawn;
 
     [Header("Seeds")]
+    private Enemy_Spawner spawner;
     public GameObject[] seeds;
     public float seedDropChance = 0.2f;
-    private bool firstSeed = true;
 
     [Header("Animations")]
     public Animator enemyAnimator;
@@ -47,6 +47,7 @@ public class Enemy_Manager : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         Buildings = GameObject.FindGameObjectsWithTag("Building");
         Spawn = GameObject.Find("EnemySpawn");
+        spawner = FindObjectOfType<Enemy_Spawner>();
 
         whichBuildingInt = Random.Range(0, Buildings.Length);
 
@@ -96,7 +97,7 @@ public class Enemy_Manager : MonoBehaviour
 
     public void Stealing()
     {
-        if (currentTime >= stealingTime && !FindObjectOfType<Enemy_Spawner>().isTutorial)
+        if (currentTime >= stealingTime && !spawner.isTutorial)
         {
             stolenResources = Random.Range(minResourcesStolen, maxResourcesStolen);
             if (Random.value > 0.5f)
@@ -123,18 +124,19 @@ public class Enemy_Manager : MonoBehaviour
             return;
         }
         currentTime = 0;
-        State = 3;
         isScared = true;
         DropSeed();
-        FindObjectOfType<Enemy_Spawner>().CheckRaidCompletion();
+        spawner.CheckRaidCompletion();
+        State = 3;
+        Leave();
     }
 
     private void DropSeed()
     {
-        if (firstSeed)
+        if (spawner.firstSeed)
         {
             Instantiate(seeds[0], transform.position, Quaternion.Euler(-90, 0, 0));
-            firstSeed = false;
+            spawner.firstSeed = false;
         }
         else if (Random.value < seedDropChance && !FindObjectOfType<Enemy_Spawner>().isTutorial)
         {
@@ -144,8 +146,8 @@ public class Enemy_Manager : MonoBehaviour
 
     public void Leave()
     {
-        agent.SetDestination(Spawn.transform.position);
         agent.isStopped = false;
+        agent.SetDestination(Spawn.transform.position);
 
         if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
         {

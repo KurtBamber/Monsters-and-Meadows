@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class MovementManager : MonoBehaviour
 {
@@ -55,7 +56,7 @@ public class MovementManager : MonoBehaviour
             isMonsterClicked = false;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) || selectedMonster.Count == 0)
+        if (Input.GetKeyDown(KeyCode.Backspace) || selectedMonster.Count == 0)
         {
             foreach (var monsters in selectedMonster)
             {

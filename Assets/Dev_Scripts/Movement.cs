@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEngine.GraphicsBuffer;
 
 public class Movement : MonoBehaviour
 {
@@ -12,6 +13,11 @@ public class Movement : MonoBehaviour
     private NavMeshAgent agent;
     public GameObject indicatorPrefab;
     public Animator playerAnimator;
+    public float indicatorCooldown = 0.3f;
+    private float indicatorTimer = 0f;
+    private Vector3 lastClickPoint = Vector3.zero;
+    private float minMoveDistance = 1f;
+    private NavMeshPath path;
 
     public bool isRunning;
 
@@ -22,6 +28,7 @@ public class Movement : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         agent.speed = speed;
         agent.updateRotation = false;//makes it so the agent doesnt control its rotation
+        path = new NavMeshPath();
     }
 
     // Update is called once per frame
@@ -43,8 +50,9 @@ public class Movement : MonoBehaviour
         {
             agent.enabled = true;//enables the navagent
             agent.isStopped = false;
+            indicatorTimer -= Time.deltaTime;
 
-            if (Input.GetMouseButtonDown(1))//if RMB is pressed
+            if (Input.GetMouseButton(1))//if RMB is pressed
             {
                 MoveTo();
             }
@@ -61,17 +69,17 @@ public class Movement : MonoBehaviour
 
         if (agent.enabled && !useWASD)
         {
-            if (agent.remainingDistance >= 0.1)
+            if (agent.velocity.magnitude > 1)
             {
                 isRunning = true;
             }
-            else if (agent.remainingDistance < 0.1)
+            else if (agent.velocity.magnitude < 1)
             {
                 isRunning = false;
             }
         }
 
-        if(agent.isStopped == false)
+        if (isRunning)
         {
             playerAnimator.SetBool("isRunning", true);
         }
@@ -121,11 +129,22 @@ public class Movement : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, groundLayerMask))
         {
-            agent.SetDestination(hit.point);//sets the agents destination to the point clicked
+            float distance = Vector3.Distance(lastClickPoint, hit.point);
 
-            GameObject indicator = Instantiate(indicatorPrefab, hit.point, indicatorPrefab.transform.rotation);//spawns an indicator where clicked
+            // Only set new destination if it's significantly different
+            if (distance > minMoveDistance)
+            {
+                NavMesh.CalculatePath(agent.transform.position, hit.point, NavMesh.AllAreas, path);
+                agent.SetPath(path);
+                lastClickPoint = hit.point;
 
-            Destroy(indicator, 0.5f);//destroys the indicator after 0.5 seconds
+                if (indicatorTimer <= 0)
+                {
+                    GameObject indicator = Instantiate(indicatorPrefab, hit.point, indicatorPrefab.transform.rotation);
+                    Destroy(indicator, 0.5f);
+                    indicatorTimer = indicatorCooldown;
+                }
+            }
         }
     }
 }

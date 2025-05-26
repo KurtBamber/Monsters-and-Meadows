@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: LumberersHouse
   m_EditorClassIdentifier: 
   buildingPrefab: {fileID: 2718554225880993831, guid: 27a9f86e580b316458ecd38ddf6b4f0e, type: 3}
-  requiredWood: 0
-  requiredStone: 0
+  requiredWood: 80
+  requiredStone: 80

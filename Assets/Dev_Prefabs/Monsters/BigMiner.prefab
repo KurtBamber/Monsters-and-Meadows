@@ -474,7 +474,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76935306edc646c43a43f64b4ef230b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  amount: 5
+  amount: 10
   interval: 5
 --- !u!114 &8086736989440911757
 MonoBehaviour:

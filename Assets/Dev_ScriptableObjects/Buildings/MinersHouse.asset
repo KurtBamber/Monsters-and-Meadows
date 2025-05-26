@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: MinersHouse
   m_EditorClassIdentifier: 
   buildingPrefab: {fileID: 6526017171188328576, guid: fcc700d946e305443852f0a8677d1a57, type: 3}
-  requiredWood: 0
-  requiredStone: 0
+  requiredWood: 80
+  requiredStone: 80

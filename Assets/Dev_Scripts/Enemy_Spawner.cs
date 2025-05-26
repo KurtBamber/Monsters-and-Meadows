@@ -10,6 +10,7 @@ public class Enemy_Spawner : MonoBehaviour
     public bool spawnEnemies, enemiesHaveSpawned, isTutorial;
     public LayerMask enemyLayer;
     public bool firstRaid = true;
+    public bool firstSeed = true;
 
     public void Update()
     {

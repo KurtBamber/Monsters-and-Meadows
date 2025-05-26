@@ -9,14 +9,12 @@ public class BuildingManager : MonoBehaviour
     public Button buildersHouseButton;
     public Button minersHouseButton;
     public Button lumberersHouseButton;
-    public Button storageButton;
     private Vector3 selectedPlotPosition;
     private Quaternion selectedPlotRotation;
     private GameObject selectedPlot;
     public Buildings buildersHouse;
     public Buildings minersHouse;
     public Buildings lumberersHouse;
-    public Buildings storage;
     public GameObject underConstructionPrefab;
 
 
@@ -26,7 +24,6 @@ public class BuildingManager : MonoBehaviour
         buildersHouseButton.onClick.AddListener(() => Build(buildersHouse));//on clicking the house button call the build func with the house object
         minersHouseButton.onClick.AddListener(() => Build(minersHouse));
         lumberersHouseButton.onClick.AddListener(() => Build(lumberersHouse));
-        storageButton.onClick.AddListener(() => Build(storage));//on clicking the storage button call the build func with the storage object
     }
 
     public void OpenBuildMenu(Vector3 position, Quaternion rotation, GameObject plot)
