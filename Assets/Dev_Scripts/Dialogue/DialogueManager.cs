@@ -21,18 +21,48 @@ public class DialogueManager : MonoBehaviour
     private bool waitingForZoom = false;
     public bool waitingForHarvest = false;
     public bool waitingForSelection = false;
+    public bool waitingForInspection = false;
     public Seed firstSeed;
+    public bool firstHarvest = true;
     public GameObject nextButton;
+    private bool wasActive = false;
+    private bool firstTime = true;
+    private HintManager hintManager;
 
     private void Start()
     {
         button.onClick.AddListener(OnButtonClick);
+        hintManager = FindObjectOfType<HintManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (waitingForZoom || waitingForHarvest || waitingForSelection)
+        if (FindObjectOfType<InspectorManager>().inspectorUI.activeSelf && dialogueBox.activeSelf)
+        {
+            dialogueBox.SetActive(false);
+            wasActive = true;
+
+            if (firstTime)
+            {
+                hintManager.ShowCloseInspectorHint();
+            }
+        }
+
+        if (wasActive && !FindObjectOfType<InspectorManager>().inspectorUI.activeSelf)
+        {
+            wasActive = false;
+            dialogueBox.SetActive(true);
+
+            if (firstTime)
+            {
+                firstTime = false;
+                waitingForInspection = false;
+                hintManager.HideCloseInspectorHint();
+            }
+        }
+
+        if (waitingForZoom || waitingForHarvest || waitingForSelection || waitingForInspection)
         {
             nextButton.SetActive(false);
         }
@@ -41,10 +71,10 @@ public class DialogueManager : MonoBehaviour
             nextButton.SetActive(true);
         }
 
-        if (Input.GetAxis("Mouse ScrollWheel") < 0f && waitingForZoom)
+        if (FindObjectOfType<CameraManager>().isZoomedOut && waitingForZoom)
         {
             waitingForZoom = false;
-            FindObjectOfType<HintManager>().HideScrollHint();
+            hintManager.HideScrollHint();
             DisplayNextSentence();
         }
         
@@ -58,7 +88,7 @@ public class DialogueManager : MonoBehaviour
     {
         if (dialogueBox.activeSelf)
         {
-            if (waitingForZoom || waitingForHarvest || waitingForSelection)
+            if (waitingForZoom || waitingForHarvest || waitingForSelection || waitingForInspection)
             {
                 return;
             }
@@ -115,14 +145,14 @@ public class DialogueManager : MonoBehaviour
             waitingForZoom = true;
             currentSentence = currentSentence.Replace("[ZOOM]", "");
             dialogueText.text = currentSentence;
-            FindObjectOfType<HintManager>().ShowScrollHint();
+            hintManager.ShowScrollHint();
             return;
         }
 
         if (currentSentence.Contains("[PULLIVAN]"))
         {
             currentSentence = currentSentence.Replace("[PULLIVAN]", "");
-            FindObjectOfType<HintManager>().ShowInteractHint();
+            hintManager.ShowInteractHint();
         }
 
         if (currentSentence.Contains("[PAN]"))
@@ -136,7 +166,7 @@ public class DialogueManager : MonoBehaviour
             waitingForHarvest = true;
             currentSentence = currentSentence.Replace("[HARVEST]", "");
             dialogueText.text = currentSentence;
-            FindObjectOfType<HintManager>().ShowInteractHint();
+            hintManager.ShowInteractHint();
             return;
         }
 
@@ -145,7 +175,7 @@ public class DialogueManager : MonoBehaviour
             waitingForSelection = true;
             currentSentence = currentSentence.Replace("[SELECT]", "");
             dialogueText.text = currentSentence;
-            FindObjectOfType<HintManager>().ShowSelectHint();
+            hintManager.ShowSelectHint();
             return;
         }
 
@@ -167,7 +197,7 @@ public class DialogueManager : MonoBehaviour
         FindObjectOfType<FollowManager>().inGarden = false;
         Camera.main.GetComponent<CameraManager>().cameraControlEnabled = true;
         FindObjectOfType<Hotbar>().AddSeed(firstSeed);
-        FindObjectOfType<HintManager>().ShowPlantHint();
+        hintManager.ShowPlantHint();
     }
 
     IEnumerator TypeSentence(string sentence)

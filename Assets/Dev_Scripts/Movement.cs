@@ -5,15 +5,12 @@ using static UnityEngine.GraphicsBuffer;
 public class Movement : MonoBehaviour
 {
     private Rigidbody rb;
-    private float horizontal;
-    private float vertical;
     public float speed = 10f;
     public float rotationSpeed = 10f;
-    public bool useWASD = false;
     private NavMeshAgent agent;
     public GameObject indicatorPrefab;
     public Animator playerAnimator;
-    public float indicatorCooldown = 0.3f;
+    public float indicatorCooldown = 0.1f;
     private float indicatorTimer = 0f;
     private Vector3 lastClickPoint = Vector3.zero;
     private float minMoveDistance = 1f;
@@ -34,56 +31,18 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (useWASD)
-        {
-            if (agent.enabled)//checks if the navagent is enabled
-            {
-                agent.ResetPath();//clears the agents path to stop errors
-                agent.isStopped = true;//stops the agent to make sure it doesnt move
-            }
-            agent.enabled = false;//disables the navagent
+        indicatorTimer -= Time.deltaTime;
 
-            horizontal = Input.GetAxisRaw("Horizontal");
-            vertical = Input.GetAxisRaw("Vertical");
-        }
-        else
+        if (Input.GetMouseButton(1))//if RMB is pressed
         {
-            agent.enabled = true;//enables the navagent
-            agent.isStopped = false;
-            indicatorTimer -= Time.deltaTime;
-
-            if (Input.GetMouseButton(1))//if RMB is pressed
-            {
-                MoveTo();
-            }
+            MoveTo();
         }
 
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
-        {
-            isRunning = true;
-        }
-        else
-        {
-            isRunning = false;
-        }
-
-        if (agent.enabled && !useWASD)
-        {
-            if (agent.velocity.magnitude > 1)
-            {
-                isRunning = true;
-            }
-            else if (agent.velocity.magnitude < 1)
-            {
-                isRunning = false;
-            }
-        }
-
-        if (isRunning)
+        if (agent.velocity.magnitude > 1)
         {
             playerAnimator.SetBool("isRunning", true);
         }
-        else
+        else if (agent.velocity.magnitude < 1)
         {
             playerAnimator.SetBool("isRunning", false);
         }
@@ -91,38 +50,22 @@ public class Movement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (useWASD)
+        if (agent.enabled && !agent.isStopped)
         {
-            Vector3 movement = new Vector3(horizontal, 0, vertical).normalized;
-            rb.MovePosition(transform.position + movement * speed * Time.fixedDeltaTime);//moves the player according to the input direction
+            rb.MovePosition(agent.nextPosition);
+            agent.nextPosition = rb.position;
 
-            if (movement != Vector3.zero)//checks if the player is moving
+            if (agent.velocity.sqrMagnitude > 0.01f)
             {
-                Quaternion targetRotation = Quaternion.LookRotation(movement);
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
+                Quaternion targetRotation = Quaternion.LookRotation(agent.velocity.normalized);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime * 2);
             }
         }
-        else
-        {
-            if (!agent.isStopped && agent.enabled)//checks that the agent is not stopped and is enabled
-            {
-                rb.MovePosition(agent.nextPosition);//moves the players rigidbody to the agents position to ensure collisions still work
-                agent.nextPosition = rb.position;
-
-                if (agent.velocity != Vector3.zero)//checks if the player is moving
-                {
-                    Quaternion targetRotation = Quaternion.LookRotation(agent.velocity.normalized);
-                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime * 2);//updates the players transform directly instead of relying on the agents rotation
-                }
-            }
-        }
-
-
     }
 
     private void MoveTo()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);//gets the point where the player clicked
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
         int groundLayerMask = LayerMask.GetMask("Ground");
@@ -131,7 +74,6 @@ public class Movement : MonoBehaviour
         {
             float distance = Vector3.Distance(lastClickPoint, hit.point);
 
-            // Only set new destination if it's significantly different
             if (distance > minMoveDistance)
             {
                 NavMesh.CalculatePath(agent.transform.position, hit.point, NavMesh.AllAreas, path);

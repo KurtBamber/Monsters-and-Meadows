@@ -135,12 +135,12 @@ public class Enemy_Manager : MonoBehaviour
     {
         if (spawner.firstSeed)
         {
-            Instantiate(seeds[0], transform.position, Quaternion.Euler(-90, 0, 0));
+            Instantiate(seeds[0], transform.position + new Vector3(0, -1, 0), Quaternion.Euler(-90, 0, 0));
             spawner.firstSeed = false;
         }
         else if (Random.value < seedDropChance && !FindObjectOfType<Enemy_Spawner>().isTutorial)
         {
-            Instantiate(seeds[Random.Range(0, seeds.Length)], transform.position, Quaternion.Euler(-90, 0, 0));
+            Instantiate(seeds[Random.Range(0, seeds.Length)], transform.position + new Vector3(0, -1, 0), Quaternion.Euler(-90, 0, 0));
         }
     }
 

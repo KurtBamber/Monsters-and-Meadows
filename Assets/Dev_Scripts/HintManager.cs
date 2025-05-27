@@ -19,6 +19,7 @@ public class HintManager : MonoBehaviour
     private bool hasScrolled = false;
     private bool hasPlanted = false;
     private bool hasSelected = false;
+    private bool hasInspected = false;
 
     void Start()
     {
@@ -88,6 +89,21 @@ public class HintManager : MonoBehaviour
         }
     }
 
+    public void ShowOpenInspectorHint()
+    {
+        hintText.text = "Press (I) to open the inspector.";
+        StartCoroutine(FadeIn());
+    }
+
+    public void ShowCloseInspectorHint()
+    {
+        if (!hasInspected)
+        {
+            hintText.text = "Press (I) to close the inspector.";
+            StartCoroutine(FadeIn());
+        }
+    }
+
     public void HideScrollHint()
     {
         hasScrolled = true;
@@ -104,6 +120,14 @@ public class HintManager : MonoBehaviour
     {
         hasSelected = true;
         dragHint.SetActive(false);
+        mouseHintImage.enabled = false;
+        FindObjectOfType<DialogueManager>().waitingForInspection = true;
+        ShowOpenInspectorHint();
+    }
+
+    public void HideCloseInspectorHint()
+    {
+        hasInspected = true;
         StartCoroutine(FadeOut());
     }
 

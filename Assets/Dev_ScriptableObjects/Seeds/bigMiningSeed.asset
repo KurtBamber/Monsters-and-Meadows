@@ -15,6 +15,7 @@ MonoBehaviour:
   seedName: 
   seedIcon: {fileID: 21300000, guid: 78a72b3b71d484a45a52af675d0a872d, type: 3}
   monsterPrefab: {fileID: 5728389114951007918, guid: 8f74da108409ded4295447bdd200ce03, type: 3}
-  growthTime: 20
-  plantPrefab: {fileID: 791968693480556185, guid: 18ad5448225c8f649a5072ecc974ff90, type: 3}
+  growthTime: 30
+  plantPrefab: {fileID: 2116473900604422536, guid: 46c8d559639d7b144bc54c53614ad371, type: 3}
   monsterType: {fileID: 11400000, guid: 3c5fca731c6d75c41a5162efec0675fc, type: 2}
+  dirtPrefab: {fileID: 4130108746381185876, guid: 90a234d407267e141b373d0569c91dea, type: 3}

@@ -12,4 +12,5 @@ public class Seed : ScriptableObject
     public float growthTime;
     public GameObject plantPrefab;
     public MonsterType monsterType;
+    public GameObject dirtPrefab;
 }

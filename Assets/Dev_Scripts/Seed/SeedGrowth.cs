@@ -6,54 +6,64 @@ using UnityEngine;
 public class SeedGrowth : MonoBehaviour
 {
     public Seed seedData;
-    public GameObject smallStage;
-    public GameObject mediumStage;
-    public GameObject finalStage;
-
     public bool isFullyGrown = false;
-    private bool firstTime = true;
     private bool firstHarvest = true;
     public Dialogue dialogue;
+    private DialogueManager dialogueManager;
+    private GameObject dirtObject;
+
+    private void Start()
+    {
+        dialogueManager = FindObjectOfType<DialogueManager>();
+    }
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0) && isFullyGrown)//if the seed if fully grown and lmb is pressed harvest
+        if (Input.GetMouseButtonDown(0) && isFullyGrown)
         {
-            Harvest();
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (hit.collider.gameObject == this.gameObject)
+                {
+                    Harvest();
+                }
+            }
         }
 
-        if (isFullyGrown && firstTime)
+        if (isFullyGrown && dialogueManager.firstHarvest)
         {
-            firstTime = false;
-            StartCoroutine(HarvestDialogue());
+            dialogueManager.firstHarvest = false;
+            dialogueManager.StartDialogue(dialogue);
         }
     }
 
-    IEnumerator HarvestDialogue()
-    {
-        yield return null;
-
-        FindObjectOfType<DialogueManager>().StartDialogue(dialogue);
-    }
-
-    public void StartGrowing(Seed seed)
+    public void StartGrowing(Seed seed, GameObject dirt)
     {
         seedData = seed;
+        dirtObject = dirt;
         StartCoroutine(Grow(seed.growthTime));//starts the grow coroutine getting the growth time from the seed
     }
 
     private IEnumerator Grow(float growthTime)
     {
-        GameObject small = Instantiate(smallStage, transform.position, Quaternion.identity);//spawns the small stage of the seed
+        transform.localScale = Vector3.zero;
+        Vector3 startPos = transform.position;
 
-        yield return new WaitForSeconds(growthTime / 2);//waits for the growth time 
+        float timer = 0f;
 
-        Destroy(small);//destroys the small stage of the seed
-        GameObject medium = Instantiate(mediumStage, transform.position, Quaternion.identity);//spawns the medium stage of the seed
+        while (timer < growthTime)
+        {
+            timer += Time.deltaTime;
+            float t = timer / growthTime;
+            transform.localScale = Vector3.Lerp(Vector3.zero, new Vector3(2, 2, 2), t);
+            transform.position = Vector3.Lerp(startPos, startPos + new Vector3(0, 1, 0), t);
+            yield return null;
+        }
 
-        yield return new WaitForSeconds(growthTime / 2);
-        Destroy(medium);//destroys the medium stage of the seed
-        finalStage.SetActive(true);//sets the final stage to active so it can check for collisions
+        transform.localScale = new Vector3(2, 2, 2);
         isFullyGrown = true;
     }
 
@@ -74,10 +84,22 @@ public class SeedGrowth : MonoBehaviour
                 if (firstHarvest)
                 {
                     firstHarvest = false;
-                    FindObjectOfType<DialogueManager>().waitingForHarvest = false;
-                    FindObjectOfType<DialogueManager>().DisplayNextSentence();
+                    dialogueManager.waitingForHarvest = false;
+                    dialogueManager.DisplayNextSentence();
                 }
+
+                Collider[] nearby = Physics.OverlapSphere(transform.position, 1f);
+                foreach (Collider col in nearby)
+                {
+                    Plot plot = col.GetComponent<Plot>();
+                    if (plot != null)
+                    {
+                        plot.isOccupied = false;
+                    }
+                }
+
                 Destroy(gameObject);//destroys the seed
+                Destroy(dirtObject);
             }
         }
     }

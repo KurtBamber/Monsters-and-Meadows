@@ -61,13 +61,20 @@ public class Hotbar : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit))
         {
-            if (hit.collider.CompareTag("Plantable"))//checks if the clicked area is plantable
+            if (hit.collider.CompareTag("Plantable"))
             {
-                UseSeed(selectedSlot, hit.point);//if so uses the selected seed and plants it at the clicked location
-                if (firstSeed)
+                Plot plot = hit.collider.GetComponent<Plot>();
+                if (!plot.isOccupied)
                 {
-                    firstSeed = false;
-                    FindObjectOfType<HintManager>().HidePlantHint();
+                    Vector3 plotCenter = hit.collider.bounds.center;
+                    UseSeed(selectedSlot, plotCenter);
+                    plot.isOccupied = true;
+
+                    if (firstSeed)
+                    {
+                        firstSeed = false;
+                        FindObjectOfType<HintManager>().HidePlantHint();
+                    }
                 }
             }
         }
@@ -76,9 +83,12 @@ public class Hotbar : MonoBehaviour
     public void UseSeed(int slotIndex, Vector3 plantPosition)
     {
         Seed selectedSeed = slots[slotIndex].seed;//gets the seed from the slot
-        GameObject plant = Instantiate(selectedSeed.plantPrefab, plantPosition, Quaternion.identity);//spawns the seeds prefab at the clicked location
+
+        GameObject plant = Instantiate(selectedSeed.plantPrefab, plantPosition, Quaternion.Euler(0, 180, 180));
         SeedGrowth growth = plant.GetComponent<SeedGrowth>();
-        growth.StartGrowing(selectedSeed);//starts the 'growing' process
+        GameObject dirt = Instantiate(selectedSeed.dirtPrefab, plantPosition + new Vector3(0, -0.2f, 0), Quaternion.Euler(90, 0, 0));
+        growth.StartGrowing(selectedSeed, dirt);
+
 
         slots[slotIndex].quantity--;//removes one from the current slots seed quantity
 

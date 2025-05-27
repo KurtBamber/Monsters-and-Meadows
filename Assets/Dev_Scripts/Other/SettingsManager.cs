@@ -7,8 +7,8 @@ using UnityEngine.Windows.WebCam;
 public class SettingsManager : MonoBehaviour
 {
     public GameObject settingsUI;
-    public bool isSettingsOpen, isDevModeOn, isWASD;
-    public GameObject devCheck, WASD;
+    public bool isSettingsOpen, isDevModeOn;
+    public GameObject devCheck;
 
     public Camera mainCam;
     public Movement Movement;
@@ -20,13 +20,10 @@ public class SettingsManager : MonoBehaviour
         settingsUI = this.gameObject.transform.GetChild(0).gameObject;
         settingsUI.SetActive(false);
         devCheck.SetActive(false);
-        WASD.gameObject.SetActive(false);
         oldMask = Camera.main.cullingMask;
 
         isSettingsOpen = false;
         isDevModeOn = false;
-        isWASD = false;
-
     }
 
     public void Update()
@@ -68,22 +65,6 @@ public class SettingsManager : MonoBehaviour
             Camera.main.cullingMask = -1;
 
             isDevModeOn = true;
-        }
-    }
-
-    public void MovementMode()
-    {
-        if (isWASD)
-        {
-            WASD.SetActive(false);
-            Movement.useWASD = false;
-            isWASD = false;
-        }
-        else if (!isWASD)
-        {
-            WASD.SetActive(true);
-            Movement.useWASD = true;
-            isWASD = true;
         }
     }
 

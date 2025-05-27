@@ -7,25 +7,21 @@ public class House : MonoBehaviour
     public MonsterType.MonsterRole houseType;
     private List<EnergySystem> currentOccupants = new List<EnergySystem>();
     public int maxOccupants = 2;
-    public bool hasSpace;
+    public bool hasSpace = true;
 
-    // Start is called before the first frame update
-    private void OnEnabled()
+    private void Start()
+    {
+        hasSpace = true;
+    }
+
+    private void OnEnable()
     {
         FindObjectOfType<HouseManager>().AddHouse(this);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void UpdateHasSpace()
     {
-        if (currentOccupants.Count >= maxOccupants)
-        {
-            hasSpace = false;
-        }
-        else
-        {
-            hasSpace = true;
-        }
+        hasSpace = currentOccupants.Count < maxOccupants;
     }
 
     public void EnterHouse(EnergySystem monster)
@@ -33,6 +29,7 @@ public class House : MonoBehaviour
         if (!currentOccupants.Contains(monster) && hasSpace)
         {
             currentOccupants.Add(monster);
+            UpdateHasSpace();
         }
     }
 
@@ -41,6 +38,7 @@ public class House : MonoBehaviour
         if (currentOccupants.Contains(monster))
         {
             currentOccupants.Remove(monster);
+            UpdateHasSpace();
         }
     }
 }

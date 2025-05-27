@@ -15,6 +15,7 @@ MonoBehaviour:
   seedName: Small Building Seed
   seedIcon: {fileID: 21300000, guid: 28afeea8b08faca4aacb1c72224807b6, type: 3}
   monsterPrefab: {fileID: 8221325651288779083, guid: a815bcc8538fa904ea74b0b0c525996d, type: 3}
-  growthTime: 10
-  plantPrefab: {fileID: 791968693480556185, guid: 18ad5448225c8f649a5072ecc974ff90, type: 3}
+  growthTime: 15
+  plantPrefab: {fileID: 167648542790055506, guid: ce68e8aa3c651bf4ebff16c107195aa4, type: 3}
   monsterType: {fileID: 11400000, guid: 53d6dc9edb8555244b09c9ceadf1fb85, type: 2}
+  dirtPrefab: {fileID: 4130108746381185876, guid: 90a234d407267e141b373d0569c91dea, type: 3}

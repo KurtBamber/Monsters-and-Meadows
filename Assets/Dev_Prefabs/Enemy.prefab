@@ -193,7 +193,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0.3
+  m_StoppingDistance: 6
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -228,8 +228,8 @@ MonoBehaviour:
   stealingTime: 5
   currentTime: 0
   stolenResources: 0
-  maxResourcesStolen: 0
-  minResourcesStolen: 30
+  maxResourcesStolen: 5
+  minResourcesStolen: 5
   Spawn: {fileID: 0}
   seeds:
   - {fileID: 5874558148474796948, guid: c9a270d27e6b3694eb9d32149968151f, type: 3}

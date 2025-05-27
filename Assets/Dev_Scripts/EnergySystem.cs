@@ -72,6 +72,7 @@ public class EnergySystem : MonoBehaviour
     {
         isRecharging = true;
         currentHouse = house;
+        currentHouse.EnterHouse(this);
         monsterAI.agent.isStopped = true;
         monsterAI.ChangeState(monsterState.idle);
     }
@@ -79,6 +80,7 @@ public class EnergySystem : MonoBehaviour
     public void StopRecharging()
     {
         isRecharging = false;
+        currentHouse.LeaveHouse(this);
         currentHouse = null;
         monsterAI.agent.isStopped = false;
         monsterAI.ChangeState(monsterState.wandering);

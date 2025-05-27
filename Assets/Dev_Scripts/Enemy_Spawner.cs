@@ -96,15 +96,18 @@ public class Enemy_Spawner : MonoBehaviour
 
     private IEnumerator RaidWait()
     {
-        if (!isTutorial)
+        while (true)
         {
-            float waitTime = Random.Range(minRaidDelay, maxRaidDelay);
-            yield return new WaitForSeconds(waitTime);
-            enemiesHaveSpawned = false;
-        }
-        else
-        {
-            yield return null;
+            if (!isTutorial)
+            {
+                float waitTime = Random.Range(minRaidDelay, maxRaidDelay);
+                yield return new WaitForSeconds(waitTime);
+                enemiesHaveSpawned = false;
+            }
+            else
+            {
+                yield return new WaitForSeconds(5f);
+            }
         }
     }
 
