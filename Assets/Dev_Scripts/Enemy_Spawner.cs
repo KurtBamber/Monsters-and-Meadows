@@ -24,8 +24,8 @@ public class Enemy_Spawner : MonoBehaviour
             {
                 amountToSpawn = 2;
             }
-            SpawnEnemies();
             enemiesHaveSpawned = true;
+            SpawnEnemies();
         }
 
         if (Input.GetMouseButtonDown(0))
@@ -103,6 +103,7 @@ public class Enemy_Spawner : MonoBehaviour
                 float waitTime = Random.Range(minRaidDelay, maxRaidDelay);
                 yield return new WaitForSeconds(waitTime);
                 enemiesHaveSpawned = false;
+                break;
             }
             else
             {

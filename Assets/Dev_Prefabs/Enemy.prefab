@@ -238,7 +238,7 @@ MonoBehaviour:
   - {fileID: 7809421381908457789, guid: 24e0884227633ae4cb6d149dae702a50, type: 3}
   - {fileID: 1888051077307413073, guid: 1caabeb752054f148b3c277d605c566e, type: 3}
   - {fileID: 5831893218533398468, guid: a3b080145bfbc5040b5efac89897d200, type: 3}
-  seedDropChance: 0.2
+  seedDropChance: 0.33
   enemyAnimator: {fileID: 1255669647874292724}
 --- !u!1001 &4613829300239058533
 PrefabInstance:
